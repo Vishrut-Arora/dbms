@@ -46,3 +46,22 @@ button{
     margin: auto;
     max-width: 400px;
 }
+
+select{
+    border: none;
+    color: grey;
+    border-bottom: 2px solid rgb(21, 241, 113);
+    margin-right: 15px;
+}
+select#gender {
+    width: 100%;
+}
+select#designation{
+    width: 100%;
+}
+select:focus{
+    outline: none;
+}
+option{
+    color: grey;
+}
