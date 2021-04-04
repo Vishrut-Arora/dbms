@@ -1,6 +1,6 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-app = Flask(__name__)
+app = Flask(__name__, static_url_path = '', static_folder = 'templates')
 
 app.config['SECRET_KEY'] = 'dbmsproject'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

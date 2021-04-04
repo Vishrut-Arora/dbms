@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="form.css">
+    <link rel="stylesheet" type="text/css" href="/form.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <title>signup</title>
+    
 </head>
 <body>
     <div class="container">
@@ -28,7 +30,7 @@
         </div>
     </form>
 
-    <form action="/" method="">
+    <form method="POST">
         <div class="input-field">
             <i class='bx bxs-user' ></i>
             <input type="text" name="name" id="name" placeholder="Full Name">
@@ -43,7 +45,7 @@
         
         <div class="input-field">
             <select name="designation" id="designation">
-                <option value="">designation</option>
+                <!-- <option value="">designation</option> -->
                 <option value="Professor">Professor</option>
                 <option value="Student">Student</option>
                 <option value="Academics">Academics</option>
@@ -65,7 +67,7 @@
             <i class='bx bxs-key' ></i>
             <input type="password" name="password" id="password" placeholder="password">
         </div>
-        <button>SignUp!</button>
+        <button type="submit">SignUp!</button>
     </form>
 
 

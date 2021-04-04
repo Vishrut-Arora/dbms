@@ -1,8 +1,9 @@
 from app import app,db
-from flask import Flask, render_template, url_for, redirect, flash, get_flashed_messages
+from flask import Flask, render_template, url_for, redirect, flash, get_flashed_messages, request
 from datetime import datetime
 import forms
 from modules.db import connect_to_db
+from datetime import datetime 
 
 
 @app.route('/')
@@ -17,31 +18,29 @@ def login():
 @app.route('/register', methods= ['GET', 'POST'])
 def register():
     form = forms.AddUserForm()
-    if form.validate_on_submit():
-        name = form.name.data
+    print(request.form)
+    # print(request.json.get('na
+    # me'))
+    for i in request.form:
+        print(request.form[i])
+    # print(request.args)
+    # if form.validate_on_submit():
+    try:
+        name = request.form['name']
         cur = connect_to_db()
+        print("before")
         cur.execute(f"""
-            create user "{name}" with password '{name}';
+            create user "{name}_{request.form['designation']}" with password '{name}';
+            Grant all on "User" to '{name}_{request.form['designation']}';
+            INSERT INTO "User" ("Name","Age","EmailID","Gender","Designation","Password","LastLogin","Admin","Contact") 
+            VALUES ('{name}, {request.form['age']} ,'{request.form['email']}', {request.form['gender']}, {request.form['designation']}, {request.form['password']}, '{datetime.now()}', false, {request.form['contact']});
         """)
-        cur.execute(f"""
-            SELECT usename AS role_name,
-              CASE 
-                 WHEN usesuper AND usecreatedb THEN 
-            	   CAST('superuser, create database' AS pg_catalog.text)
-                 WHEN usesuper THEN 
-            	    CAST('superuser' AS pg_catalog.text)
-                 WHEN usecreatedb THEN 
-            	    CAST('create database' AS pg_catalog.text)
-                 ELSE 
-            	    CAST('' AS pg_catalog.text)
-              END role_attributes
-            FROM pg_catalog.pg_user
-            ORDER BY role_name desc;
-        """)
-        print(cur.fetchall())
+        print("after")
         cur.close()
         return redirect(url_for('index'))
-    return render_template('signup.html', form=form)
+    except Exception as e:
+        print(e)
+        return render_template('signup.html', form=form)
 
 @app.route('/student')
 def student():
