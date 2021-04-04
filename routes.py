@@ -20,9 +20,9 @@ def register():
     if form.validate_on_submit():
         name = form.name.data
         cur = connect_to_db()
-        # cur.execute(f"""
-        #     create user "{name}" with password '{name}';
-        # """)
+        cur.execute(f"""
+            create user "{name}" with password '{name}';
+        """)
         cur.execute(f"""
             SELECT usename AS role_name,
               CASE 

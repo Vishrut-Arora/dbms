@@ -4,10 +4,11 @@ import os
 load_dotenv()
 
 def connect_to_db():
-    cur = psycopg2.connect(
+    conn = psycopg2.connect(
         database = "DBMS",
         user = "postgres",
         password = os.environ.get('PASSWORD'),
         host = "localhost"
     )
-    return cur.cursor()
+    conn.autocommit = True
+    return conn.cursor()
