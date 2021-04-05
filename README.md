@@ -1,5 +1,8 @@
 # Achievements of Students of IIITD - DBMS Project
 
+
+> Always git pull before starting
+
 ## Configuration:
     $ git clone <url>
     $ cd dbms
@@ -11,3 +14,8 @@
     - git add -A
     - git commit -m "<user> <description>"
     - git push -u origin master 
+    if want to make a branch
+    - git checkout -b <branch_name>
+    - git add -A
+    - git commit -m "<message>"
+    - git push -u origin <branch_name>
