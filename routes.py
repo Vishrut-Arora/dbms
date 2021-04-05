@@ -9,7 +9,8 @@ from datetime import datetime
 @app.route('/')
 @app.route('/index', methods = ['GET',])
 def index():
-    return render_template('base.html')
+    name = "Sudeeep"
+    return render_template('parents.html', name = name)
 
 @app.route('/login')
 def login():
@@ -21,8 +22,11 @@ def register():
     print(request.form)
     # print(request.json.get('na
     # me'))
+    
     for i in request.form:
         print(request.form[i])
+    
+    print(request.form)
     # print(request.args)
     # if form.validate_on_submit():
     try:
@@ -40,7 +44,8 @@ def register():
         return redirect(url_for('index'))
     except Exception as e:
         print(e)
-        return render_template('signup.html', form=form)
+        name = "Sudeep"
+    return render_template('signup.html', form=form, name = name)
 
 @app.route('/student')
 def student():
