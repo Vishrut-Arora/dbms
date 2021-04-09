@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{{name}}
+<h1>See ur childs achievement</h1>
+{{achievements}}
+<form action="" method="POST">
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="text" name="parentdID" id="parentdID" placeholder="Your Parent emailID" style="margin-left: 15px;width: 70%;">
+    </div>
+    <button type="submit">See Achievements</button>
+</form>
 
 {% endblock %}

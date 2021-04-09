@@ -10,7 +10,7 @@ from datetime import datetime
 @app.route('/index', methods=['GET', ])
 def index():
     name = "Sudeeep"
-    return render_template('parents.html', name=name)
+    return render_template('base.html', name=name)
 
 
 @app.route('/login')
@@ -52,10 +52,26 @@ def register():
 def student():
     return render_template('users.html')
 
+@app.route('/parent',methods=['GET', 'POST'])
+def parentQueries():
+    result=request.form
+    x=""
+    try:
+        cur=connect_to_db()
+        cur.execute(f""" select * from "Achievement"
+        where "StudentId" in (
+        Select "RollNo" from "Student"
+	        where "ParentId"='{result['parentdID']}'
+        );
+        """)
+        x=cur.fetchall()
+        cur.close()
+    except Exception as e:
+        print(e)
+    return render_template('parents.html',achievements=x)
 
 @app.route('/professor', methods=['GET', 'POST'])
 def professorQueries():
-    form = forms.AddUserForm()
     result = request.form
     mentor=""
     studentWorkingProjects=""
