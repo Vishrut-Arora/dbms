@@ -3,7 +3,7 @@
 
 <h2> Academic Queries</h2>
 <h1>Update GPA</h1>
-<form action="" method="POST">
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
         <select name="operation" id="operation">
             <!-- <option value="">designation</option> -->
@@ -13,19 +13,17 @@
         </select>
     </div>   
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
-        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="rollno" id="rollno" placeholder="rollno">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
-        <input type="number" name="gpa" id="gpa" placeholder="gpa" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="gpa" id="gpa" placeholder="gpa">
     </div>
 
-    <button type="submit" name="Academic-submit" style="margin-left: 15px">UPDATE GPA</button>
+    <button type="submit" name="Academic-submit">UPDATE GPA</button>
     
 </form>
 <h1>SHOW STUDENT DETAILS</h1>
-<form action="" method="POST">
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
         <select name="operation2" id="operation2">
             <!-- <option value="">designation</option> -->
@@ -33,10 +31,9 @@
         </select>
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
-        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="rollno" id="rollno" placeholder="rollno">
     </div>
-    <button type="submit" name="Search-submit" style="margin-left: 15px;">Search</button>
+    <button type="submit" name="Search-submit">Search</button>
     
 </form>
 {% endblock %}

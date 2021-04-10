@@ -5,12 +5,12 @@
 <h1>UPDATE EDUCATION</h1>
 <div class="container">
 
-    <form action="" method="POST">
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
         <div class="input-field">
-            <input type="number" name="professorID" id="professorID" placeholder="professorID" style="margin-left: 15px;width: 70%;">
+            <input type="number" name="professorID" id="professorID" placeholder="professorID">
         </div>
         <div class="input-field">
-            <input type="number" name="educationID" id="educationID" placeholder="educationID" style="margin-left: 15px;width: 70%;">
+            <input type="number" name="educationID" id="educationID" placeholder="educationID">
         </div>
         <div class="input-field">
             <select name="operation" id="operation">
@@ -21,73 +21,75 @@
                 <!-- <option value="Male"></option> -->
             </select>
         </div>
-        <button type="submit" name="education-submit" class="shadow col-4">UPDATE EDUCATION</button>
+        <button type="submit" name="education-submit" class="">UPDATE EDUCATION</button>
         
     </form>
 
 <h1>FIND MENTOR</h1>
-{{mentor}}
-<form action="" method="POST">
+{% if mentor[0]%}
+    {{mentor[0][0]}}
+{% endif %}
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
-        <input type="number" name="Mentor-Project" id="projectID" placeholder="projectID" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="Mentor-Project" id="projectID" placeholder="projectID">
     </div>
-    <button type="submit" name="mentors-submits">SEE MENTORS</button>
+    <button type="submit" name="mentors-submits" class="">SEE MENTORS</button>
 </form>
 <h1>ADD PROJECT</h1>
-<form action="" method="POST">
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
-        <input type="number" name="AprojectID" id="projectID" placeholder="projectID" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="AprojectID" id="projectID" placeholder="projectID">
     </div>
     <div class="input-field">
-        <input type="text" name="Title" id="Title" placeholder="Title" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="Title" id="Title" placeholder="Title">
     </div>
     <div class="input-field">
-        <input type="text" name="EmployeeId" id="EmployeeId" placeholder="EmployeeId" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="EmployeeId" id="EmployeeId" placeholder="EmployeeId">
     </div>
     <div class="input-field">
-        <input type="text" name="Duration" id="Duration" placeholder="Duration" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="Duration" id="Duration" placeholder="Duration">
     </div>
     <div class="input-field">
-        <input type="text" name="StartDate" id="StartDate" placeholder="StartDate" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="StartDate" id="StartDate" placeholder="StartDate">
     </div>
     <div class="input-field">
-        <input type="text" name="EndDate" id="EndDate" placeholder="EndDate" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="EndDate" id="EndDate" placeholder="EndDate">
     </div>
     <div class="input-field">
-        <input type="text" name="Field" id="Field" placeholder="Field" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="Field" id="Field" placeholder="Field">
     </div>
     <div class="input-field">
-        <input type="text" name="Domain" id="Domain" placeholder="Domain" style="margin-left: 15px;width: 70%;">
+        <input type="text" name="Domain" id="Domain" placeholder="Domain">
     </div>
-    <button type="submit" name="addProject-submit">ADD PROJECT</button>
+    <button type="submit" name="addProject-submit" class="">ADD PROJECT</button>
     <!-- Insert into “Project” (‘Title’, ‘MentorId’, ‘Duration’, ‘StartDate’, ‘EndDate’, ‘Field’, ‘Domain’) values ({Title}, {EmployeeId}, {Duration}, {StartDate},{EndDate}, {Field}, {Domain}) -->
 </form>
 <h1>See details of students under a project</h1>
-<form action="" method="POST">
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     {{studentWorkingProjects}}
     <div class="input-field">
-        <input type="number" name="projectID" id="projectID" placeholder="students working on the given projectID" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="projectID" id="projectID" placeholder="students working on the given projectID">
     </div>
     {{studentGPA}}
     <div class="input-field">
-        <input type="number" name="rollnoGPA" id="rollno" placeholder="student rollno to search GPA" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="rollnoGPA" id="rollno" placeholder="student rollno to search GPA">
     </div>
     {{projectsUnderStudents}}
     <div class="input-field">
-        <input type="number" name="rollnoPID" id="rollno" placeholder="student rollno to see projects he is working on" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="rollnoPID" id="rollno" placeholder="student rollno to see projects he is working on">
     </div>
     
-    <button type="submit" name="project_underStudent">SEE STUDENT DETAILS</button>
+    <button type="submit" name="project_underStudent" class="">SHOW DETAILS</button>
 </form>
 <h1>Assign student to project</h1>
-<form action="" method="POST">
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
-        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="rollno" id="rollno" placeholder="rollno">
     </div>
     <div class="input-field">
-        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" style="margin-left: 15px;width: 70%;">
+        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID">
     </div>
-    <button type="submit" name="assignStudent">Assign Student</button>
+    <button type="submit" name="assignStudent" class="">Assign Student</button>
 </form>
 </div>
 
