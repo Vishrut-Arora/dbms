@@ -205,7 +205,8 @@ Where "StudentId"= {result['rollnoPID']}
             cur.close()
         except Exception as e:
             print(e)
-    return render_template('professor.html')
+     return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)
+
 
 ######################################################################################
 #                                  SPORTS AND CULTURAL
@@ -352,4 +353,4 @@ def Academic():
     return render_template('Academic.html')
 
 ############################
-    return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)
+   
