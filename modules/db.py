@@ -1,7 +1,6 @@
 import psycopg2
-from dotenv import load_dotenv
 import os
-load_dotenv()
+
 
 def connect_to_db():
     conn = psycopg2.connect(

@@ -7,11 +7,9 @@
 
     <form action="" method="POST">
         <div class="input-field">
-            <i class='bx bxs-user' ></i>
             <input type="number" name="professorID" id="professorID" placeholder="professorID" style="margin-left: 15px;width: 70%;">
         </div>
         <div class="input-field">
-            <i class='bx bxs-user' ></i>
             <input type="number" name="educationID" id="educationID" placeholder="educationID" style="margin-left: 15px;width: 70%;">
         </div>
         <div class="input-field">
@@ -26,12 +24,11 @@
         <button type="submit" name="education-submit">UPDATE EDUCATION</button>
         
     </form>
-</div>
+
 <h1>FIND MENTOR</h1>
 {{mentor}}
 <form action="" method="POST">
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="Mentor-Project" id="projectID" placeholder="projectID" style="margin-left: 15px;width: 70%;">
     </div>
     <button type="submit" name="mentors-submits">SEE MENTORS</button>
@@ -39,35 +36,27 @@
 <h1>ADD PROJECT</h1>
 <form action="" method="POST">
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="AprojectID" id="projectID" placeholder="projectID" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="Title" id="Title" placeholder="Title" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="EmployeeId" id="EmployeeId" placeholder="EmployeeId" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="Duration" id="Duration" placeholder="Duration" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="StartDate" id="StartDate" placeholder="StartDate" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="EndDate" id="EndDate" placeholder="EndDate" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="Field" id="Field" placeholder="Field" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="text" name="Domain" id="Domain" placeholder="Domain" style="margin-left: 15px;width: 70%;">
     </div>
     <button type="submit" name="addProject-submit">ADD PROJECT</button>
@@ -77,17 +66,14 @@
 <form action="" method="POST">
     {{studentWorkingProjects}}
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="projectID" id="projectID" placeholder="students working on the given projectID" style="margin-left: 15px;width: 70%;">
     </div>
     {{studentGPA}}
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="rollnoGPA" id="rollno" placeholder="student rollno to search GPA" style="margin-left: 15px;width: 70%;">
     </div>
     {{projectsUnderStudents}}
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="rollnoPID" id="rollno" placeholder="student rollno to see projects he is working on" style="margin-left: 15px;width: 70%;">
     </div>
     
@@ -96,15 +82,13 @@
 <h1>Assign student to project</h1>
 <form action="" method="POST">
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
     </div>
     <div class="input-field">
-        <i class='bx bxs-user' ></i>
         <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" style="margin-left: 15px;width: 70%;">
     </div>
     <button type="submit" name="assignStudent">Assign Student</button>
 </form>
-
+</div>
 
 {% endblock %}
