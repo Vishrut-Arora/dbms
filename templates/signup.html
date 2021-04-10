@@ -72,9 +72,11 @@
 
             <select name="gender" id="gender">
                 <option value="">Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="other">other</option>
+                {% for i in genders %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+                <!-- <option value="Female">Female</option>
+                <option value="other">other</option> -->
             </select>
             <input type="number" name="age" id="age" placeholder="age" style="width: 100%;">
             

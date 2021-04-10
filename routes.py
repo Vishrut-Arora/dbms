@@ -102,11 +102,11 @@ def professorQueries():
             try:
                 cur = connect_to_db()
                 cur.execute(f"""select "Title" from "Project" 
-where "ProjectId" in(
-Select "ProjectId" from "Indulged"
-Where "StudentId"= {result['rollnoPID']} 
-);
-""")
+                    where "ProjectId" in(
+                    Select "ProjectId" from "Indulged"
+                    Where "StudentId"= {result['rollnoPID']} 
+                    );
+                """)
                 studentWorkingProjects=cur.fetchall()
                 
                 cur.close()
