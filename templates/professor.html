@@ -3,27 +3,30 @@
 
 <h2> Prof Quries</h2>
 <h1>UPDATE EDUCATION</h1>
-<form action="" method="POST">
-    <div class="input-field">
-        <i class='bx bxs-user' ></i>
-        <input type="number" name="professorID" id="professorID" placeholder="professorID" style="margin-left: 15px;width: 70%;">
-    </div>
-    <div class="input-field">
-        <i class='bx bxs-user' ></i>
-        <input type="number" name="educationID" id="educationID" placeholder="educationID" style="margin-left: 15px;width: 70%;">
-    </div>
-    <div class="input-field">
-        <select name="operation" id="operation">
-            <!-- <option value="">designation</option> -->
-            <option value="Insert">Insert</option>
-            <option value="Update">Update</option>
-            <option value="Delete">Delete</option>
-            <!-- <option value="Male"></option> -->
-        </select>
-    </div>
-    <button type="submit" name="education-submit">UPDATE EDUCATION</button>
-    
-</form>
+<div class="container">
+
+    <form action="" method="POST">
+        <div class="input-field">
+            <i class='bx bxs-user' ></i>
+            <input type="number" name="professorID" id="professorID" placeholder="professorID" style="margin-left: 15px;width: 70%;">
+        </div>
+        <div class="input-field">
+            <i class='bx bxs-user' ></i>
+            <input type="number" name="educationID" id="educationID" placeholder="educationID" style="margin-left: 15px;width: 70%;">
+        </div>
+        <div class="input-field">
+            <select name="operation" id="operation">
+                <!-- <option value="">designation</option> -->
+                <option value="Insert">Insert</option>
+                <option value="Update">Update</option>
+                <option value="Delete">Delete</option>
+                <!-- <option value="Male"></option> -->
+            </select>
+        </div>
+        <button type="submit" name="education-submit">UPDATE EDUCATION</button>
+        
+    </form>
+</div>
 <h1>FIND MENTOR</h1>
 {{mentor}}
 <form action="" method="POST">
