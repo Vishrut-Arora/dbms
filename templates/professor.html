@@ -25,6 +25,7 @@
     
 </form>
 <h1>FIND MENTOR</h1>
+{{mentor}}
 <form action="" method="POST">
     <div class="input-field">
         <i class='bx bxs-user' ></i>
@@ -69,4 +70,38 @@
     <button type="submit" name="addProject-submit">ADD PROJECT</button>
     <!-- Insert into “Project” (‘Title’, ‘MentorId’, ‘Duration’, ‘StartDate’, ‘EndDate’, ‘Field’, ‘Domain’) values ({Title}, {EmployeeId}, {Duration}, {StartDate},{EndDate}, {Field}, {Domain}) -->
 </form>
+<h1>See details of students under a project</h1>
+<form action="" method="POST">
+    {{studentWorkingProjects}}
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="projectID" id="projectID" placeholder="students working on the given projectID" style="margin-left: 15px;width: 70%;">
+    </div>
+    {{studentGPA}}
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="rollnoGPA" id="rollno" placeholder="student rollno to search GPA" style="margin-left: 15px;width: 70%;">
+    </div>
+    {{projectsUnderStudents}}
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="rollnoPID" id="rollno" placeholder="student rollno to see projects he is working on" style="margin-left: 15px;width: 70%;">
+    </div>
+    
+    <button type="submit" name="project_underStudent">SEE STUDENT DETAILS</button>
+</form>
+<h1>Assign student to project</h1>
+<form action="" method="POST">
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" style="margin-left: 15px;width: 70%;">
+    </div>
+    <button type="submit" name="assignStudent">Assign Student</button>
+</form>
+
+
 {% endblock %}

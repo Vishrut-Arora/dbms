@@ -1,22 +1,24 @@
-from app import app,db
+from app import app, db
 from flask import Flask, render_template, url_for, redirect, flash, get_flashed_messages, request
 from datetime import datetime
 import forms
 from modules.db import connect_to_db
-from datetime import datetime 
+from datetime import datetime
 
 
 @app.route('/')
-@app.route('/index', methods = ['GET',])
+@app.route('/index', methods=['GET', ])
 def index():
     name = "Sudeeep"
-    return render_template('parents.html', name = name)
+    return render_template('base.html', name=name)
+
 
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-@app.route('/register', methods= ['GET', 'POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     print("start")
     form = forms.AddUserForm()
@@ -30,7 +32,7 @@ def register():
         name = request.form['name']
         cur = connect_to_db()
         print("befor")
-        
+
         cur.execute(f"""
             create user "{name}_{request.form['designation']}" with password '{name}';
             Grant all on "User" to "{name}_{request.form['designation']}";
@@ -43,17 +45,88 @@ def register():
     except Exception as e:
         print(e)
         name = "Sudeep"
-    return render_template('signup.html', form=form, name = name)
+    return render_template('signup.html', form=form, name=name)
+
 
 @app.route('/student')
 def student():
     return render_template('users.html')
 
-@app.route('/professor',methods= ['GET', 'POST'])
-def professorQueries():
-    form=forms.AddUserForm()
+@app.route('/parent',methods=['GET', 'POST'])
+def parentQueries():
     result=request.form
-    # Mentors Stuff starts
+    x=""
+    try:
+        cur=connect_to_db()
+        cur.execute(f""" select * from "Achievement"
+        where "StudentId" in (
+        Select "RollNo" from "Student"
+	        where "ParentId"='{result['parentdID']}'
+        );
+        """)
+        x=cur.fetchall()
+        cur.close()
+    except Exception as e:
+        print(e)
+    return render_template('parents.html',achievements=x)
+
+@app.route('/professor', methods=['GET', 'POST'])
+def professorQueries():
+    result = request.form
+    mentor=""
+    studentWorkingProjects=""
+    projectsUnderStudents=""
+    studentGPA=""
+    if('assignStudent' in result):
+        try:
+            cur=connect_to_db()
+            cur.execute(f""" Insert into "Indulged" ("ProjectId", "StudentId") values ({result['projectID']},{result['rollno']})""")
+            cur.close()
+        except Exception as e:
+            print(e)
+    if("project_underStudent" in result):
+        print(" inproject_underStudent")
+        print(result)
+        if(result['rollnoGPA'] != ''):
+            try:
+                cur = connect_to_db()
+                cur.execute(
+                    f"""Select  "GPA" from "Student" where "RollNo" = {result['rollnoGPA']};""")
+                studentGPA=cur.fetchall()
+                # print(cur.fetchall())
+                cur.close()
+            except Exception as e:
+                print(e)
+        
+        if(result['rollnoPID'] != ''):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""select "Title" from "Project" 
+where "ProjectId" in(
+Select "ProjectId" from "Indulged"
+Where "StudentId"= {result['rollnoPID']} 
+);
+""")
+                studentWorkingProjects=cur.fetchall()
+                
+                cur.close()
+            except Exception as e:
+                print(e)
+        try:
+            cur = connect_to_db()
+            if(result['projectID'] != ''):
+                cur.execute(f"""
+            select * from "Student"
+                Where "RollNo" in (
+            Select "StudentId" from "Indulged"
+	            Where "ProjectId"={result['projectID']}
+                );
+                """)
+            projectsUnderStudents=cur.fetchall()
+            cur.close()
+        except Exception as e:
+            print(e)
+    ##########################Mentor Stuff##################
     if("mentors-submits" in result):
         print("in mentors-submits")
         print(result)
@@ -67,28 +140,29 @@ def professorQueries():
 	            where "ProjectId"={result['Mentor-Project']}
             );
             """)
+            mentor=cur.fetchall()
             print(cur.fetchall())
             print("after")
             cur.close()
         except Exception as e:
             print(e)
-    # education related quesries
+    ################################# education related quesries####################
     if("education-submit" in result):
         print("in education-submit")
         print(result)
-        educationID=result["educationID"]
-        professorID=result["professorID"]
-        if(result["operation"]=="Insert"):
+        educationID = result["educationID"]
+        professorID = result["professorID"]
+        if(result["operation"] == "Insert"):
             try:
                 cur = connect_to_db()
                 cur.execute(f"""
                 INSERT INTO "Attended_Professor" ("EducationId","ProfessorId") VALUES ({educationID},{professorID})
                 """)
-                
+
                 cur.close()
             except Exception as e:
                 print(e)
-        if(result["operation"]=="Update"):
+        if(result["operation"] == "Update"):
             try:
                 cur = connect_to_db()
                 cur.execute(f"""
@@ -97,11 +171,11 @@ def professorQueries():
                 Where "ProfessorId"={professorID}
 
                 """)
-                
+
                 cur.close()
             except Exception as e:
                 print(e)
-        if(result["operation"]=="Delete"):
+        if(result["operation"] == "Delete"):
             try:
                 cur = connect_to_db()
                 cur.execute(f"""
@@ -109,18 +183,18 @@ def professorQueries():
                 Where "ProfessorId" ={professorID} and "EducationId"={educationID};
 
                 """)
-                
+
                 cur.close()
             except Exception as e:
                 print(e)
-    # Adding projects
+    ######################################### Adding projects####################################
     if("addProject-submit" in result):
         print("in addProject-submit")
         print(result)
         try:
             cur = connect_to_db()
             print("befor")
-        
+
             cur.execute(f"""
             INSERT INTO "Project" ("ProjectId","Title","MentorId","Duration","StartDate","EndDate","Field","Domain") VALUES 
 	        ({result['AprojectID']},'{result['Title']}',{result['EmployeeId']},'{result['Duration']}','{result['StartDate']}',null,'{result['Field']}','{result['Domain']}')
@@ -220,3 +294,4 @@ def professorQueries2():
     return render_template('Sports_Cultural.html')
 
 ############################
+    return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)
