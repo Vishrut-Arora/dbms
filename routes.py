@@ -208,8 +208,10 @@ Where "StudentId"= {result['rollnoPID']}
     return render_template('professor.html')
 
 ######################################################################################
+#                                  SPORTS AND CULTURAL
+######################################################################################
 @app.route('/Sports_Cultural',methods= ['GET', 'POST'])
-def professorQueries2():
+def Sports_Cultural_Queries():
     form=forms.AddUserForm()
     result=request.form
 
@@ -292,6 +294,62 @@ def professorQueries2():
                 print(e)
 
     return render_template('Sports_Cultural.html')
+######################################################################################
+#                                  ACADEMIC
+######################################################################################
+@app.route('/Academic',methods= ['GET', 'POST'])
+def Academic():
+    form=forms.AddUserForm()
+    result=request.form
+
+    if("Academic-submit" in result):
+        print("in Academic-submit")
+        print(result)
+        rollno=result["rollno"]
+        gpa=result["gpa"]
+        if(result["operation"]=="Update"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                UPDATE "Student"  
+                SET "GPA"={gpa}
+                Where "RollNo"={rollno} 
+
+                """)
+                
+                cur.close()
+            except Exception as e:
+                print(e)
+        if(result["operation"]=="Delete"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                UPDATE "Student"  
+                SET "GPA"={0}
+                Where "RollNo"={rollno}
+
+                """)
+                
+                cur.close()
+            except Exception as e:
+                print(e)
+    if("Search-submit" in result):
+        if(result["operation2"]=="By Student Roll number"):
+            rollno=result["rollno"]
+            try:
+                cur = connect_to_db()
+                print("befor")
+                cur.execute(f"""
+                Select * from "Student"
+                Where "RollNo"={rollno} 
+                """)
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)
+
+    return render_template('Academic.html')
 
 ############################
     return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)

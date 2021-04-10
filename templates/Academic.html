@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2> Academic Queries</h2>
+<h1>Update GPA</h1>
+<form action="" method="POST">
+    <div class="input-field">
+        <select name="operation" id="operation">
+            <!-- <option value="">designation</option> -->
+            <option value="Update">Update</option>
+            <option value="Delete">Delete</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+    </div>   
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="gpa" id="gpa" placeholder="gpa" style="margin-left: 15px;width: 70%;">
+    </div>
+
+    <button type="submit" name="Academic-submit" style="margin-left: 15px">UPDATE GPA</button>
+    
+</form>
+<h1>SHOW STUDENT DETAILS</h1>
+<form action="" method="POST">
+    <div class="input-field">
+        <select name="operation2" id="operation2">
+            <!-- <option value="">designation</option> -->
+            <option value="By Student Roll number">By Student Roll Number</option>>
+        </select>
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="rollno" id="rollno" placeholder="rollno" style="margin-left: 15px;width: 70%;">
+    </div>
+    <button type="submit" name="Search-submit" style="margin-left: 15px;">Search</button>
+    
+</form>
+{% endblock %}
