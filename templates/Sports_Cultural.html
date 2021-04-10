@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2> Sports_Cultural Queries</h2>
+<h1>UPDATE ACHIEVEMENTS(RELATED TO SPORTS AND CULTURAL)</h1>
+<form action="" method="POST">
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="studentID" id="studentID" placeholder="studentID" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="text" name="title" id="title" placeholder="title" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="text" name="proof" id="proof" placeholder="proof" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <select name="operation" id="operation">
+            <!-- <option value="">designation</option> -->
+            <option value="Update">Update</option>
+            <option value="Delete">Delete</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+    </div>
+    <button type="submit" name="Achievement-submit">UPDATE ACHIEVEMENTS</button>
+    
+</form>
+<h1>SHOW ACHIEVEMENTS</h1>
+<form action="" method="POST">
+    <div class="input-field">
+        <select name="operation2" id="operation2">
+            <!-- <option value="">designation</option> -->
+            <option value="By StudentId">By StudentId</option>
+            <option value="By Title">By Title</option>
+            <option value="By Institution">By Institution</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="number" name="studentID" id="studentID" placeholder="studentID" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="text" name="title" id="title" placeholder="title" style="margin-left: 15px;width: 70%;">
+    </div>
+    <div class="input-field">
+        <i class='bx bxs-user' ></i>
+        <input type="text" name="institution" id="institution" placeholder="institution" style="margin-left: 15px;width: 70%;">
+    </div>
+    <button type="submit" name="Search-submit">Search</button>
+    
+</form>
+{% endblock %}
