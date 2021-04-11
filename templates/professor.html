@@ -8,11 +8,7 @@
     <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
         <div class="input-field">
             <input type="number" name="professorID" id="professorID" placeholder="professorID">
-        </div>
-        <div class="input-field">
-            <input type="number" name="educationID" id="educationID" placeholder="educationID">
-        </div>
-        <div class="input-field">
+            <input type="number" name="educationID" id="educationID" placeholder="educationID" class="mx-3">
             <select name="operation" id="operation">
                 <!-- <option value="">designation</option> -->
                 <option value="Insert">Insert</option>
@@ -21,6 +17,7 @@
                 <!-- <option value="Male"></option> -->
             </select>
         </div>
+        
         <button type="submit" name="education-submit" class="">UPDATE EDUCATION</button>
         
     </form>
@@ -38,21 +35,15 @@
 <h1>ADD PROJECT</h1>
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
-        <input type="number" name="AprojectID" id="projectID" placeholder="projectID">
+        <input type="text" name="EmployeeId" id="EmployeeId" placeholder="EmployeeId">
+        <input type="number" name="AprojectID" id="projectID" placeholder="projectID" class="ml-3">
     </div>
     <div class="input-field">
         <input type="text" name="Title" id="Title" placeholder="Title">
     </div>
     <div class="input-field">
-        <input type="text" name="EmployeeId" id="EmployeeId" placeholder="EmployeeId">
-    </div>
-    <div class="input-field">
         <input type="text" name="Duration" id="Duration" placeholder="Duration">
-    </div>
-    <div class="input-field">
-        <input type="text" name="StartDate" id="StartDate" placeholder="StartDate">
-    </div>
-    <div class="input-field">
+        <input type="text" name="StartDate" id="StartDate" placeholder="StartDate" class="mx-3">
         <input type="text" name="EndDate" id="EndDate" placeholder="EndDate">
     </div>
     <div class="input-field">
@@ -85,9 +76,7 @@
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
         <input type="number" name="rollno" id="rollno" placeholder="rollno">
-    </div>
-    <div class="input-field">
-        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID">
+        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" class="mr-3">
     </div>
     <button type="submit" name="assignStudent" class="">Assign Student</button>
 </form>
