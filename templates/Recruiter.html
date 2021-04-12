@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>GPA of Student</h1>
+{{x}}
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    <div class="input-field">
+        <input type="number" name="RollNo" id="RollNo" placeholder="RollNo of Student">
+    </div>
+    <button type="submit" name="GPA" class="">See GPA</button>
+</form>
+
+
+
+<h1>Student with the Skill</h1>
+{{y}}
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    <div class="input-field">
+        <input type="text" name="Skill" id="Skill" placeholder="Required Skill">
+    </div>
+    <button type="submit" name="Skills" class="">See Students</button>
+</form>
+
+
+
+<h1>Students with particular degree and GPA</h1>
+
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+
+    <div class="input-field">
+        <select name="Degree_Req1" id="Degree_Req">
+            <!-- <option value="">designation</option> -->
+            <option value="Bachelors">Bachelors</option>
+            <option value="Masters">Masters</option>
+            <option value="PHD">PHD</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+        
+    </div>
+    {{u}}
+    <div class="input-field">
+        <input type="number" name="GPAA" id="GPAA" placeholder="Required GPA">
+    </div>
+    <button type="submit" name="Student_under_Degree" class="">See Students</button>
+</form>
+
+
+<h1>Proof of Skills</h1>
+{{v}}
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    <div class="input-field">
+        <input type="number" name="RollNo1" id="RollNo1" placeholder="RollNo of Student">
+    </div>
+    <button type="submit" name="Skillset_Proof" class="">See Proof</button>
+</form>
+
+
+
+<h1>Students with particular Field Project work and Degree</h1>
+
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+
+    <div class="input-field">
+        <select name="Degree_Req" id="Degree_Req">
+            <!-- <option value="">designation</option> -->
+            <option value="Bachelors">Bachelors</option>
+            <option value="Masters">Masters</option>
+            <option value="PHD">PHD</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+    </div>
+    {{d}}
+    <div class="input-field">
+        <input type="text" name="Field1" id="Field1" placeholder="Required Field">
+    </div>
+    <button type="submit" name="Project_under_Field" class="">See Results</button>
+</form>
+
+
+<h1>Verified Achievements of Student</h1>
+
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    <div class="input-field">
+        <select name="Proof_Req" id="Proof_Req">
+            <!-- <option value="">designation</option> -->
+            <option value="Verified">Verified</option>
+            <option value="File Uploaded">File Uploaded</option>
+            <option value="Pending">Pending</option>
+            <!-- <option value="Male"></option> -->
+        </select>
+    </div>
+
+    {{f}}
+    <div class="input-field">
+        <input type="number" name="RollNo3" id="RollNo3" placeholder="Required RollNo">
+    </div>
+    <button type="submit" name="Project_under_Proof" class="">See Results</button>
+</form>
+
+
+<h1>Profile of the Company</h1>
+{{g}}
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    <div class="input-field">
+        <input type="text" name="Id" id="Id" placeholder="Enter the UserId">
+    </div>
+    <button type="submit" name="Profile" class="">Show Profile</button>
+</form>
+
+
+<h1>Former Education of Student </h1>
+<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+    {{z}}
+    <div class="input-field">
+        <input type="number" name="RollNo5" id="RollNo" placeholder="RollNo of Student">
+    </div>
+    
+    <button type="submit" name="Show_Details" class="">SHOW DETAILS</button>
+</form>
+
+
+
+{% endblock %}

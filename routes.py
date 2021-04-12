@@ -352,5 +352,257 @@ def Academic():
 
     return render_template('Academic.html')
 
-############################
-   
+#######################################################################################################################################
+#                             RECRUITER
+#######################################################################################################################################
+
+@app.route('/Recruiter',methods=['GET', 'POST'])
+def RecruiterQueries():
+    result=request.form
+    x=""
+    y=""
+    z=""
+    u=""
+    v=""
+    a=""
+    b=""
+    d=""
+    g=""
+    f=""
+    ##Finding GPA of particular student Query
+    print(result)
+    if("GPA" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select u."Name" ,s."RollNo", s."GPA" from "Student" as "s" , "User" as "u" where    s."RollNo" = '{result['RollNo']}' 
+            and s."UserId" = u."EmailID" ; 
+            """)
+            x=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+    ##Skills query
+    if("Skills" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select "StudentId" from "Skill" where "Title" = '{result['Skill']}';
+            """)
+            y=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+
+    ##Range of GPA with degree
+    if("Student_under_Degree" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select u."Name", s."RollNo", s."Batch" from "Student" as "s","User" as "u" where s."GPA" >= '{result['GPAA']}' and s."UserId" = u."EmailID" and s."Degree" = '{result['Degree']}';
+            """)
+            z=cur.fetchall()
+            u=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+
+    if("Student_under_Degree" in result):
+        print("before")
+        print(result)
+        if(result["Degree_Req1"] == "Bachelors"):
+            try:
+                cur=connect_to_db()
+                cur.execute(f""" select u."Name", s."RollNo", s."Batch" from "Student" as "s","User" as "u" where s."GPA" >= '{result['GPAA']}' and s."UserId" = u."EmailID" and s."Degree" = 'Bachelors';
+                """)
+                
+                u=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)            
+        if(result["Degree_Req1"] == "Masters"):
+            try:
+                cur=connect_to_db()
+                cur.execute(f""" select u."Name", s."RollNo", s."Batch" from "Student" as "s","User" as "u" where s."GPA" >= '{result['GPAA']}' and s."UserId" = u."EmailID" and s."Degree" = 'Masters';
+                """)
+                
+                u=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)    
+        if(result["Degree_Req1"] == "PHD"):
+            try:
+                cur=connect_to_db()
+                cur.execute(f""" select u."Name", s."RollNo", s."Batch" from "Student" as "s","User" as "u" where s."GPA" >= '{result['GPAA']}' and s."UserId" = u."EmailID" and s."Degree" = 'PHD';
+                """)
+                u=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)            
+        
+
+        
+
+
+
+    if("Skillset_Proof" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select * from "Skill" where "StudentId" = '{result['RollNo1']}';
+
+            """)
+            v=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+
+
+    if("Verification_Proof" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select "StudentId","Title","Institution" from "Achievement" where "Proof" ='{result['Proof_Req']}' and "StudentId" = '{result['RollNo2']}';
+            """)
+            a=cur.fetchall()
+            b=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+    
+    
+
+    
+    if("Project_under_Field" in result):
+        print("before")
+        print(result)
+        
+        if(result["Degree_Req"] == "Bachelors"):
+            try:
+                print("before")
+                cur=connect_to_db()
+                cur.execute(f""" select  u."Name" , s."RollNo" from "Student" as "s", "Indulged" as "i" ,"User" as "u", "Project" as "p" where p."Field" = '{result['Field1']}' and p."ProjectId" = i."ProjectId" and i."StudentId" = s."RollNo" and s."Degree" = 'Bachelors' and s."UserId" = u."EmailID";
+                """)
+                d=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)
+
+
+        if(result["Degree_Req"] == "Masters"):
+            try:
+                print("before")
+                cur=connect_to_db()
+                cur.execute(f""" select  u."Name" , s."RollNo" from "Student" as "s", "Indulged" as "i" ,"User" as "u", "Project" as "p" where p."Field" = '{result['Field1']}' and p."ProjectId" = i."ProjectId" and i."StudentId" = s."RollNo" and s."Degree" = 'Masters' and s."UserId" = u."EmailID";
+                """)
+                d=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)
+        
+        if(result["Degree_Req"] == "PHD"):
+            try:
+                print("before")
+                cur=connect_to_db()
+                cur.execute(f""" select  u."Name" , s."RollNo" from "Student" as "s", "Indulged" as "i" ,"User" as "u", "Project" as "p" where p."Field" = '{result['Field1']}' and p."ProjectId" = i."ProjectId" and i."StudentId" = s."RollNo" and s."Degree" = 'PHD' and s."UserId" = u."EmailID";
+                """)
+                d=cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)
+
+
+
+    if("Project_under_Proof" in result):
+        print("before")
+        print(result)
+        
+        if(result["Proof_Req"] == "Verified"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f""" select "StudentId","Title","Institution" from "Achievement" where "Proof" =  
+                'Verified' and "StudentId" = '{result['RollNo3']}';                
+                """)
+                f = cur.fetchall()
+                print(cur.fetchall())
+
+                cur.close()
+            except Exception as e:
+                print(e)
+        if(result["Proof_Req"] == "File Uploaded"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f""" select "StudentId","Title","Institution" from "Achievement" where "Proof" =  
+                'File Uploaded' and "StudentId" = '{result['RollNo3']}';                
+                """)
+                f = cur.fetchall()
+                print(cur.fetchall())
+                cur.close()
+            except Exception as e:
+                print(e)
+        if(result["Proof_Req"] == "Pending"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f""" select "StudentId","Title","Institution" from "Achievement" where "Proof" =  
+                'Pending' and "StudentId" = '{result['RollNo3']}';                
+                """)
+                f = cur.fetchall()
+                print(cur.fetchall())
+
+                cur.close()
+            except Exception as e:
+                print(e)
+
+    if("Profile" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select * from "Recruiter" where "UserId"='{result['Id']}';
+            """)
+            g=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+
+    if("Show_Details" in result):
+        try:
+            print("before")
+            cur=connect_to_db()
+            cur.execute(f""" select a."EducationId",d."Institution",d."Degree" from "Education" as "d" , "Attended_Student" as "a" where a."StudentId" = '{result['RollNo5']}' and a."EducationId" = d."EducationId";
+            """)
+            z=cur.fetchall()
+            print(cur.fetchall())
+            print("after")
+            cur.close()
+        except Exception as e:
+            print(e)
+    
+    
+
+
+
+    return render_template('Recruiter.html',x=x,y=y,z=z,u=u,v=v,a=a,b=b,d=d,g=g,f=f)
