@@ -57,7 +57,23 @@
     {% else %}
         
     <h1>Hello {{user.email}}.! </h1>    
-    <button class = "btn btn-success"><a href="/"> Click here to continue.</a></button>
+        {% if user.designation == 'Professor' %}
+        <button class = "btn btn-success"><a href="{{ url_for('professor') }}"> Click here to continue.</a></button>
+        {% elif user.designation == 'Student' %}
+        <button class = "btn btn-success"><a href="{{ url_for('student') }}"> Click here to continue.</a></button>
+        {% elif user.designation == 'Recruiter' %}
+        <button class = "btn btn-success"><a href="{{ url_for('recuiter') }}"> Click here to continue.</a></button>
+        {% elif user.designation == 'Administration Department' %}
+        <button class = "btn btn-success"><a href="{{ url_for('adminstration') }}"> Click here to continue.</a></button>
+        {% elif  user.designation == 'Academic Department' %}
+        <button class = "btn btn-success"><a href="{{ url_for('academic') }}"> Click here to continue.</a></button>
+        {% elif  user.designation == 'Sports Committee' %}
+        <button class = "btn btn-success"><a href="{{ url_for('sports') }}"> Click here to continue.</a></button>
+        {% elif  user.designation == 'Cultural Commitee' %}
+        <button class = "btn btn-success"><a href="{{ url_for('cultural') }}"> Click here to continue.</a></button>
+        {% elif  user.designation == 'Placement Committee' %}
+        <button class = "btn btn-success"><a href="{{ url_for('placement') }}"> Click here to continue.</a></button>
+        {% endif %}
     {% endif %}
 
 
