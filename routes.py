@@ -73,6 +73,7 @@ def parentQueries():
 @app.route('/professor', methods=['GET', 'POST'])
 def professorQueries():
     result = request.form
+    print("This is request: ")
     mentor=""
     studentWorkingProjects=""
     projectsUnderStudents=""
@@ -101,7 +102,7 @@ def professorQueries():
         if(result['rollnoPID'] != ''):
             try:
                 cur = connect_to_db()
-                cur.execute(f"""select "Title" from "Project" 
+                cur.execute(f"""select * from "Project" 
                     where "ProjectId" in(
                     Select "ProjectId" from "Indulged"
                     Where "StudentId"= {result['rollnoPID']} 
@@ -134,7 +135,7 @@ def professorQueries():
             cur = connect_to_db()
             print("befor")
             cur.execute(f"""
-            Select "UserId" from "Professor"
+            Select * from "Professor"
             Where "EmployeeId" In (
             Select "MentorId" from "Project"
 	            where "ProjectId"={result['Mentor-Project']}
@@ -300,6 +301,7 @@ def Sports_Cultural_Queries():
 ######################################################################################
 @app.route('/Academic',methods= ['GET', 'POST'])
 def Academic():
+    studentDetails = ""
     form=forms.AddUserForm()
     result=request.form
 
@@ -344,13 +346,14 @@ def Academic():
                 Select * from "Student"
                 Where "RollNo"={rollno} 
                 """)
+                studentDetails = cur.fetchall()
                 print(cur.fetchall())
                 print("after")
                 cur.close()
             except Exception as e:
                 print(e)
 
-    return render_template('Academic.html')
+    return render_template('Academic.html', studentDetails = studentDetails)
 
 #######################################################################################################################################
 #                             RECRUITER
