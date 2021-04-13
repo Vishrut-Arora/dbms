@@ -4,7 +4,9 @@ from datetime import datetime
 import forms
 from modules.db import connect_to_db
 from datetime import datetime
+import traceback
 
+user = None
 
 @app.route('/')
 @app.route('/index', methods=['GET', ])
@@ -13,8 +15,75 @@ def index():
     return render_template('base.html', name=name)
 
 
-@app.route('/login')
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
+    global user
+    form = dict(request.form)
+    if form:
+        designation = form.get('designation')
+        email = form.get('email')
+        if designation and designation not in [
+            "Professor",
+            "Student",
+            "Recruiter"
+        ]:
+            cur = connect_to_db()
+            cur.execute(f"""
+                select *
+                from "User"
+                where "Designation" = '{designation}'
+            """)
+            user = {}
+            temp = cur.fetchall()[0]
+            user["Name"] = temp[0]
+            user["Age"] = temp[1]
+            user["EmailID"] = temp[2]
+            user["Gender"] = temp[3]
+            user["Designation"] = temp[4]
+            user["Password"] = temp[5]
+            user["LastLogin"] = temp[6]
+            user["Admin"] = temp[7]
+            user["Contact"] = temp[8]
+            cur.close()
+            return render_template('login.html', user = user)
+        
+        elif designation: # user email fetch
+            cur = connect_to_db()
+            try:
+                cur.execute(f"""
+                    select "EmailID"
+                    from "User"
+                    where "Designation" = '{designation}'
+                """)
+                email = [i[0] for i in cur.fetchall()]
+            except:
+                traceback.print_exc()
+            cur.close()
+            return render_template('login.html', emails = email)
+        elif email:
+            cur = connect_to_db()
+            try:
+                cur.execute(f"""
+                    select *
+                    from "User"
+                    where "EmailID" = '{email}'
+                """)
+                user = {}
+                temp = cur.fetchall()[0]
+                user["Name"] = temp[0]
+                user["Age"] = temp[1]
+                user["EmailID"] = temp[2]
+                user["Gender"] = temp[3]
+                user["Designation"] = temp[4]
+                user["Password"] = temp[5]
+                user["LastLogin"] = temp[6]
+                user["Admin"] = temp[7]
+                user["Contact"] = temp[8]
+                
+            except:
+                traceback.print_exc()
+            cur.close()
+            return render_template('login.html', user = user)
     return render_template('login.html')
 
 

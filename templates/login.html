@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="form.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Login</title>
     <style>
         h1{
@@ -16,46 +17,48 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container mt-5">
+    {{user}}
 
     <h1 style = "opacity:0.5;">Login</h1>
-
     {% if not user %}
-    <form method="POST">
-        <select name="" id="">
-            <option value="professor">Professor</option>
-            <option value="student">Student</option>
-            <option value="recruiter">Recruiter</option>
-            <option value="admin">admin</option>
-            <option value="academics">academics</option>
-            <option value="sports-and-cultural">sports-and-cultural</option>
-            <option value="academics">academics</option>
-            <option value="placement">placement committee</option>
-        </select>
-        <button class = "btn btn-success">Get data</button>
-    </form>
+        {% if not emails %}
+        <form method="POST">
+            <div class="form-group row">
+                <label for="designation" class="col-sm-2 col-form-label">Designation</label>
+                <select name="designation" id="" class="form-control col-sm-10">
+                    <option value="">Designation</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Student">Student</option>
+                    <option value="Recruiter">Recruiter</option>
+                    <option value="Administration Department">Admin</option>
+                    <option value="Academic Department">Academics</option>
+                    <option value="Sports Committee">Sports</option>
+                    <option value="Cultural Commitee">Cultural</option>
+                    <option value="Placement Committee">Placement Committee</option>
+                </select>
+            </div>
+            <button class = "btn btn-primary col-4">Get data</button>
+        </form>
+        {% else %}
+        <form method="POST">
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <select name="email" id="" class = "form-control col-sm-10">
+                    <option value="">Email</option>
+                    {% for email in emails %}
+                    <option value="{{email}}">{{email}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class = "btn btn-success">Login</button>
+        </form>
+        {% endif %}
     {% else %}
-    <form method="POST">
         
-    </form>
+    <h1>Hello {{user.email}}.! </h1>    
+    <button class = "btn btn-success"><a href="/"> Click here to continue.</a></button>
     {% endif %}
-    <form action="/" method="">
-        <div class="input-field">
-            <i class='bx bxs-user' ></i>
-            <input type="text" name="username" id="username" placeholder="username">
-        </div>
-
-        <div class="input-field">
-            <i class='bx bxs-user' ></i>
-            <input type="email" name="email" id="email" placeholder="Email">
-        </div>
-
-        <div class="input-field">
-            <i class='bx bxs-key' ></i>
-            <input type="password" name="password" id="password" placeholder="password">
-        </div>
-        <button>SignUp!</button>
-    </form>
 
 
 </div>
