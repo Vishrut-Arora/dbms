@@ -23,8 +23,37 @@
     </form>
 
 <h1>FIND MENTOR</h1>
-{% if mentor[0]%}
-    {{mentor[0][0]}}
+{% if mentor%}
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">EID</th>
+        <th scope="col">UserID</th>
+        <th scope="col">Research Fields</th>
+        <th scope="col">Vacancy</th>
+        <th scope="col">Department</th>
+        <th scope="col">Lab</th>
+        <th scope="col">H-index</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in mentor: %}
+
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <!-- {{mentor}} -->
 {% endif %}
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
@@ -55,9 +84,77 @@
     <button type="submit" name="addProject-submit" class="">ADD PROJECT</button>
     <!-- Insert into “Project” (‘Title’, ‘MentorId’, ‘Duration’, ‘StartDate’, ‘EndDate’, ‘Field’, ‘Domain’) values ({Title}, {EmployeeId}, {Duration}, {StartDate},{EndDate}, {Field}, {Domain}) -->
 </form>
-<h1>See details of students under a project</h1>
+<h1 class="mb-4">See details of students under a project</h1>
+
+{% if projectsUnderStudents %}
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">RollNo</th>
+        <th scope="col">UserID</th>
+        <th scope="col">ParentId</th>
+        <th scope="col">Degree</th>
+        <th scope="col">Batch</th>
+        <th scope="col">Major</th>
+        <th scope="col">GPA</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in projectsUnderStudents: %}
+
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if studentWorkingProjects %}
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ProjectId</th>
+        <th scope="col">Title</th>
+        <th scope="col">MentorId</th>
+        <th scope="col">StartDate</th>
+        <th scope="col">EndDate</th>
+        <th scope="col">Field</th>
+        <th scope="col">Domain</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in studentWorkingProjects: %}
+
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+
+
+
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
-    {{studentWorkingProjects}}
+    <!-- {{projectsUnderStudents}} -->
     <div class="input-field">
         <input type="number" name="projectID" id="projectID" placeholder="students working on the given projectID">
     </div>
@@ -65,7 +162,7 @@
     <div class="input-field">
         <input type="number" name="rollnoGPA" id="rollno" placeholder="student rollno to search GPA">
     </div>
-    {{projectsUnderStudents}}
+    <!-- {{studentWorkingProjects}} -->
     <div class="input-field">
         <input type="number" name="rollnoPID" id="rollno" placeholder="student rollno to see projects he is working on">
     </div>
@@ -76,7 +173,7 @@
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
         <input type="number" name="rollno" id="rollno" placeholder="rollno">
-        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" class="mr-3">
+        <input type="number" name="projectID" id="projectID" placeholder="PROJECT ID" class="ml-3">
     </div>
     <button type="submit" name="assignStudent" class="">Assign Student</button>
 </form>
