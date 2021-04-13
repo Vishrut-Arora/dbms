@@ -214,8 +214,66 @@ def professorQueries():
 ######################################################################################
 @app.route('/Sports_Cultural',methods= ['GET', 'POST'])
 def Sports_Cultural_Queries():
+    achievementDetails = ""
+    option=0
     form=forms.AddUserForm()
     result=request.form
+    roll_calls=""
+    roll_institution=""
+    roll_title=""
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select "StudentId" from "Achievement" Where "Technical"=false;
+        """)
+        roll_calls = cur.fetchall()
+        print(roll_calls)
+        for aa in range(len(roll_calls)):
+            str1=roll_calls[aa][0]
+            roll_calls[aa]=str1
+            print(str1)
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+
+    except Exception as e:
+        print(e) 
+
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select "Institution" from "Achievement" Where "Technical"=false ;
+        """)
+        roll_institution = cur.fetchall()
+        print(roll_institution)
+        for aa in range(len(roll_institution)):
+            str1=roll_institution[aa][0]
+            roll_institution[aa]=str1
+            print(str1)
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+
+    except Exception as e:
+        print(e) 
+
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select "Title" from "Achievement" Where "Technical"=false ;
+        """)
+        roll_title = cur.fetchall()
+        print(roll_title)
+        for aa in range(len(roll_title)):
+            str1=roll_title[aa][0]
+            roll_title[aa]=str1
+            print(str1)
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+
+    except Exception as e:
+        print(e)
 
     if("Achievement-submit" in result):
         print("in Achievement-submit")
@@ -250,60 +308,256 @@ def Sports_Cultural_Queries():
             except Exception as e:
                 print(e)
     if("Search-submit" in result):
-        if(result["operation2"]=="By StudentId"):
-            studentID=result["studentID"]
+        if(result["operation2"]=="Any"):
+            studentID=result["operation2"]
+        else:    
+            studentID=int(result["operation2"])
+        title=result["operation3"]
+        institution=result["operation4"]
+        #print(institution)
+        print(title,institution,studentID)
+        if(institution=="Any" and studentID=="Any" and title=="Any"):
             try:
                 cur = connect_to_db()
                 print("befor")
                 cur.execute(f"""
                 Select * from "Achievement"
-                Where "StudentId"={studentID} AND "Technical"=false 
+                Where "Technical"=false
                 """)
+                achievementDetails = cur.fetchall()
+                option=1
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)            
+        elif(studentID=="Any"):
+            if(title=="Any"):
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "Institution" LIKE '%{institution}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)  
+            else:
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "Title" LIKE '%{title}%' AND "Institution" LIKE '%{institution}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)
+        elif(title=="Any"):
+            if(institution=="Any"):
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "StudentId"={studentID} AND "Technical"=false
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)  
+            else:
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "StudentId"={studentID} AND "Institution" LIKE '%{institution}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)
+        elif(institution=="Any"):
+            if(studentID=="Any"):
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "Title" LIKE '%{title}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)  
+            else:
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)
+        else:
+            try:
+                cur = connect_to_db()
+                print("befor")
+                cur.execute(f"""
+                Select * from "Achievement"
+                Where "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Institution" LIKE '%{institution}%' AND "Technical"=false 
+                """)
+                achievementDetails = cur.fetchall()
+                option=1
                 print(cur.fetchall())
                 print("after")
                 cur.close()
             except Exception as e:
                 print(e)
 
-        if(result["operation2"]=="By Title"):
-            title=result["title"]
-            try:
-                cur = connect_to_db()
-                print("befor")
-                cur.execute(f"""
-                Select * from "Achievement"
-                Where "Title"={title} AND "Technical"=false 
-                """)
-                print(cur.fetchall())
-                print("after")
-                cur.close()
-            except Exception as e:
-                print(e)
 
-        if(result["operation2"]=="By Institution"):
-            institution=result["institution"]
-            try:
-                cur = connect_to_db()
-                print("befor")
-                cur.execute(f"""
-                Select * from "Achievement"
-                Where "Institution"={institution} AND "Technical"=false 
-                """)
-                print(cur.fetchall())
-                print("after")
-                cur.close()
-            except Exception as e:
-                print(e)
 
-    return render_template('Sports_Cultural.html')
+
+
+        # try:
+        #     cur = connect_to_db()
+        #     print("befor")
+        #     cur.execute(f"""
+        #     Select * from "Achievement"
+        #     Where "StudentId"={studentID} AND "Technical"=false 
+        #     """)
+        #     achievementDetails = cur.fetchall()
+        #     option=1
+        #     print(cur.fetchall())
+        #     print("after")
+        #     cur.close()
+        # except Exception as e:
+        #     print(e)
+
+
+        # title=result["operation3"]
+        # try:
+        #     cur = connect_to_db()
+        #     print("befor")
+        #     cur.execute(f"""
+        #     Select * from "Achievement"
+        #     Where "Title" LIKE '%{title}%' AND "Technical"=false 
+        #     """)
+        #     achievementDetails = cur.fetchall()
+        #     option=2
+        #     print(cur.fetchall())
+        #     print("after")
+        #     cur.close()
+        # except Exception as e:
+        #     print(e)
+
+        # if(result["operation2"]=="By Institution"):
+        #     institution=result["operation4"]
+        #     try:
+        #         cur = connect_to_db()
+        #         print("befor")
+        #         cur.execute(f"""
+        #         Select * from "Achievement"
+        #         Where "Institution" LIKE '%{institution}%' AND "Technical"=false 
+        #         """)
+        #         achievementDetails = cur.fetchall()
+        #         option=3
+        #         print(cur.fetchall())
+        #         print("after")
+        #         cur.close()
+        #     except Exception as e:
+        #         print(e)
+    print(roll_title,roll_institution)
+    return render_template('Sports_Cultural.html', achievementDetails = achievementDetails,option=option,roll_calls=roll_calls,roll_institution=roll_institution,roll_title=roll_title)
 ######################################################################################
 #                                  ACADEMIC
 ######################################################################################
 @app.route('/Academic',methods= ['GET', 'POST'])
 def Academic():
     studentDetails = ""
+    div1=0
+    div2=0
+    div3=0
+    roll_calls=""
     form=forms.AddUserForm()
     result=request.form
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select "RollNo" from "Student";
+        """)
+        roll_calls = cur.fetchall()
+        print(roll_calls)
+        for aa in range(len(roll_calls)):
+            str1=roll_calls[aa][0]
+            roll_calls[aa]=str1
+            print(str1)
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+
+    except Exception as e:
+        print(e) 
+
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select count(*) from "Student" where "GPA">=9;
+        """)
+        div1 = cur.fetchall()
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+    except Exception as e:
+        print(e)
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select count(*) from "Student" where "GPA">=7.5 and "GPA"<9;
+        """)
+        div2 = cur.fetchall()
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+    except Exception as e:
+        print(e)
+
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+        Select count(*) from "Student" where "GPA"<7.5;
+        """)
+        div3 = cur.fetchall()
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+    except Exception as e:
+        print(e)
 
     if("Academic-submit" in result):
         print("in Academic-submit")
@@ -337,8 +591,21 @@ def Academic():
             except Exception as e:
                 print(e)
     if("Search-submit" in result):
-        if(result["operation2"]=="By Student Roll number"):
-            rollno=result["rollno"]
+        if(result["operation2"]=="Any"):
+            try:
+                cur = connect_to_db()
+                print("befor")
+                cur.execute(f"""
+                Select * from "Student" 
+                """)
+                studentDetails = cur.fetchall()
+                print(cur.fetchall())
+                print("after")
+                cur.close()
+            except Exception as e:
+                print(e)
+        else:
+            rollno=result["operation2"]
             try:
                 cur = connect_to_db()
                 print("befor")
@@ -353,7 +620,7 @@ def Academic():
             except Exception as e:
                 print(e)
 
-    return render_template('Academic.html', studentDetails = studentDetails)
+    return render_template('Academic.html', studentDetails = studentDetails,div1=div1,div2=div2,div3=div3,roll_calls=roll_calls)
 
 #######################################################################################################################################
 #                             RECRUITER

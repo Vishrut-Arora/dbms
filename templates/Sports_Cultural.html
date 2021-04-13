@@ -29,22 +29,65 @@
     <div class="input-field">
         <select name="operation2" id="operation2">
             <!-- <option value="">designation</option> -->
-            <option value="By StudentId">By StudentId</option>
-            <option value="By Title">By Title</option>
-            <option value="By Institution">By Institution</option>
+            <option value="Any">RollNo</option>
+            {% for row in roll_calls: %}
+                <option value={{row}}>{{row}}</option>
+            {% endfor %}
+            
             <!-- <option value="Male"></option> -->
         </select>
     </div>
     <div class="input-field">
-        <input type="number" name="studentID" id="studentID" placeholder="studentID">
+        <select name="operation3" id="operation3">
+            <!-- <option value="">designation</option> -->
+            <option value="Any">Title</option>
+            {% for row in roll_title: %}
+                <option value={{row}}>{{row}}</option>
+            {% endfor %}
+            <!-- <option value="Male"></option> -->
+        </select>
     </div>
     <div class="input-field">
-        <input type="text" name="title" id="title" placeholder="title">
+        <select name="operation4" id="operation4">
+            <!-- <option value="">designation</option> -->
+            <option value="Any">Institution</option>
+            {% for row in roll_institution: %}
+                <option value={{row}}>{{row}}</option>
+            {% endfor %}
+            <!-- <option value="Male"></option> -->
+        </select>
     </div>
-    <div class="input-field">
-        <input type="text" name="institution" id="institution" placeholder="institution">
-    </div>
+        <!-- <div class="input-field">
+            <input type="text" name="any" id="any" placeholder="Enter here">
+        </div> -->
     <button type="submit" name="Search-submit">Search</button>
     
 </form>
+{% if achievementDetails %}
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">StudentId</th>
+        <th scope="col">Title</th>
+        <th scope="col">Technical</th>
+        <th scope="col">Proof</th>
+        <th scope="col">Institution</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in achievementDetails: %}
+
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 {% endblock %}
