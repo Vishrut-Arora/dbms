@@ -20,6 +20,25 @@
 
     <h1 style = "opacity:0.5;">Login</h1>
 
+    {% if not user %}
+    <form method="POST">
+        <select name="" id="">
+            <option value="professor">Professor</option>
+            <option value="student">Student</option>
+            <option value="recruiter">Recruiter</option>
+            <option value="admin">admin</option>
+            <option value="academics">academics</option>
+            <option value="sports-and-cultural">sports-and-cultural</option>
+            <option value="academics">academics</option>
+            <option value="placement">placement committee</option>
+        </select>
+        <button class = "btn btn-success">Get data</button>
+    </form>
+    {% else %}
+    <form method="POST">
+        
+    </form>
+    {% endif %}
     <form action="/" method="">
         <div class="input-field">
             <i class='bx bxs-user' ></i>
