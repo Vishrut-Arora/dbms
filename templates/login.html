@@ -81,6 +81,7 @@
         {% elif  user.Designation == 'Placement Committee' %}
         <button class = "btn btn-success"><a href="{{ url_for('placement') }}"> Click here to continue.</a></button>
         {% endif %}
+        <button class = "btn btn-danger"><a href="{{ url_for('logout')}}">Logout</a></button>
     {% endif %}
 
 

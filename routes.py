@@ -33,7 +33,8 @@ def login():
         if designation and designation not in [
             "Professor",
             "Student",
-            "Recruiter"
+            "Recruiter",
+            "Parent"
         ]:
             cur = connect_to_db()
             cur.execute(f"""
@@ -124,6 +125,9 @@ def register():
         name = "Sudeep"
     return render_template('signup.html', form=form, name=name)
 
+@app.route('/logout')
+def logout():
+    return redirect(url_for('login'))
 
 @app.route('/student')
 def student():
@@ -147,7 +151,7 @@ def parent():
         cur.close()
     except Exception as e:
         print(e)
-    return render_template('parents.html',achievements=x)
+    return render_template('parents.html',achievements=x, user = session['user'])
 
 @app.route('/professor', methods=['GET', 'POST'])
 def professorQueries():
