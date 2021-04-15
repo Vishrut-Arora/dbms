@@ -2,12 +2,38 @@
 {% block content %}
 
 <h1>See ur childs achievement</h1>
-{{achievements}}
+<!-- {{achievements}} -->
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
         <input type="text" name="parentdID" id="parentdID" placeholder="Your Parent emailID">
     </div>
     <button type="submit">See Achievements</button>
 </form>
+{% if achievements %}
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">RollNo</th>
+        <th scope="col">Achievement</th>
+        <th scope="col">Technical</th>
+        <th scope="col">Status</th>
+        <th scope="col">Institution</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in achievements: %}
+
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 
 {% endblock %}
