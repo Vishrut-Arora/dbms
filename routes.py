@@ -1,12 +1,21 @@
 from app import app, db
-from flask import Flask, render_template, url_for, redirect, flash, get_flashed_messages, request
+from flask import (
+    Flask,
+    render_template, 
+    url_for, 
+    redirect, 
+    flash, 
+    get_flashed_messages, 
+    request,
+    session
+)
 from datetime import datetime
 import forms
 from modules.db import connect_to_db
 from datetime import datetime
 import traceback
 
-user = None
+# user = None
 
 @app.route('/')
 @app.route('/index', methods=['GET', ])
@@ -17,7 +26,6 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    global user
     form = dict(request.form)
     if form:
         designation = form.get('designation')
@@ -25,7 +33,8 @@ def login():
         if designation and designation not in [
             "Professor",
             "Student",
-            "Recruiter"
+            "Recruiter",
+            "Parent"
         ]:
             cur = connect_to_db()
             cur.execute(f"""
@@ -33,19 +42,19 @@ def login():
                 from "User"
                 where "Designation" = '{designation}'
             """)
-            user = {}
+            session['user']={}
             temp = cur.fetchall()[0]
-            user["Name"] = temp[0]
-            user["Age"] = temp[1]
-            user["EmailID"] = temp[2]
-            user["Gender"] = temp[3]
-            user["Designation"] = temp[4]
-            user["Password"] = temp[5]
-            user["LastLogin"] = temp[6]
-            user["Admin"] = temp[7]
-            user["Contact"] = temp[8]
+            session["user"]["Name"] = temp[0]
+            session["user"]["Age"] = temp[1]
+            session["user"]["EmailID"] = temp[2]
+            session["user"]["Gender"] = temp[3]
+            session["user"]["Designation"] = temp[4]
+            session["user"]["Password"] = temp[5]
+            session["user"]["LastLogin"] = temp[6]
+            session["user"]["Admin"] = temp[7]
+            session["user"]["Contact"] = temp[8]
             cur.close()
-            return render_template('login.html', user = user)
+            return render_template('login.html', user = session['user'])
         
         elif designation: # user email fetch
             cur = connect_to_db()
@@ -68,22 +77,22 @@ def login():
                     from "User"
                     where "EmailID" = '{email}'
                 """)
-                user = {}
+                session['user'] = {}
                 temp = cur.fetchall()[0]
-                user["Name"] = temp[0]
-                user["Age"] = temp[1]
-                user["EmailID"] = temp[2]
-                user["Gender"] = temp[3]
-                user["Designation"] = temp[4]
-                user["Password"] = temp[5]
-                user["LastLogin"] = temp[6]
-                user["Admin"] = temp[7]
-                user["Contact"] = temp[8]
+                session['user']["Name"] = temp[0]
+                session['user']["Age"] = temp[1]
+                session['user']["EmailID"] = temp[2]
+                session['user']["Gender"] = temp[3]
+                session['user']["Designation"] = temp[4]
+                session['user']["Password"] = temp[5]
+                session['user']["LastLogin"] = temp[6]
+                session['user']["Admin"] = temp[7]
+                session['user']["Contact"] = temp[8]
                 
             except:
                 traceback.print_exc()
             cur.close()
-            return render_template('login.html', user = user)
+            return render_template('login.html', user = session['user'])
     return render_template('login.html')
 
 
@@ -116,28 +125,33 @@ def register():
         name = "Sudeep"
     return render_template('signup.html', form=form, name=name)
 
+@app.route('/logout')
+def logout():
+    return redirect(url_for('login'))
 
 @app.route('/student')
 def student():
     return render_template('users.html')
 
 @app.route('/parent',methods=['GET', 'POST'])
-def parentQueries():
+def parent():
     result=request.form
     x=""
     try:
+        print(session)
         cur=connect_to_db()
-        cur.execute(f""" select * from "Achievement"
-        where "StudentId" in (
-        Select "RollNo" from "Student"
-	        where "ParentId"='{result['parentdID']}'
+        cur.execute(f""" 
+            select * from "Achievement"
+            where "StudentId" in (
+            Select "RollNo" from "Student"
+	        where "ParentId"='{session['user']['EmailID']}'
         );
         """)
         x=cur.fetchall()
         cur.close()
     except Exception as e:
         print(e)
-    return render_template('parents.html',achievements=x)
+    return render_template('parents.html',achievements=x, user = session['user'])
 
 @app.route('/professor', methods=['GET', 'POST'])
 def professorQueries():
