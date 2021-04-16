@@ -1185,3 +1185,93 @@ def RecruiterQueries():
         g=list(zip(g_headers,g)),
         f=f,
         user = session['user'])
+
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin():
+
+    if 'Batch' in request.form:
+        batch = request.form['batch']
+        rollNo = request.form['rollNo']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE "Student"
+                SET "Batch" = {batch}
+                WHERE "RollNo" = {rollNo};
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+    if 'ParentId' in request.form:
+        parentId = request.form['parentId']
+        rollNo = request.form['rollNo']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE "Student"
+                SET "ParentId" = {parentId}
+                WHERE "RollNo" = {rollNo};
+
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+
+    if 'Password' in request.form:
+        EmailId = request.form['EmailID']
+        Password = request.form['password']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE User
+                SET Password = '{Password}'
+                WHERE EmailId = '{EmailId}';
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+        # print(request.form)
+
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "RollNo"
+        from "Student";
+    
+    """)
+    roll_numbers = [i[0] for i in cur.fetchall()]
+    cur.close()
+    
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "EmailID"
+        from "User"
+        where "Designation" = 'Parent';
+    """)
+    parentIds = [i[0] for i in cur.fetchall()]
+    cur.close()
+
+    cur = connect_to_db()
+    cur.execute(f"""
+        select *
+        from "Student";
+    """)
+    students = cur.fetchall()
+    students_headers = [h[0] for h in cur.description]
+    cur.close()
+    
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "EmailID"
+        from "User";
+    """)
+    emailids = [i[0] for i in cur.fetchall()]
+    # students_headers = [h[0] for h in cur.description]
+    cur.close()
+
+    return render_template('admin.html', 
+        roll_numbers = roll_numbers,
+        students = students,
+        students_headers = students_headers,
+        parentIds = parentIds,
+        emailids = emailids
+    )
