@@ -5,13 +5,27 @@
 <h1>UPDATE ACHIEVEMENTS(RELATED TO SPORTS AND CULTURAL)</h1>
 <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
     <div class="input-field">
-        <input type="number" name="studentID" id="studentID" placeholder="studentID">
+        <div class="input-field">
+            <select name="studentID" id="studentID">
+                <!-- <option value="">designation</option> -->
+                <option value="">RollNo</option>
+                {% for row in roll_calls %}
+                    <option value={{row}}>{{row}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- <input type="number" name="studentID" id="studentID" placeholder="studentID"> -->
     </div>
     <div class="input-field">
         <input type="text" name="title" id="title" placeholder="title">
     </div>
     <div class="input-field">
-        <input type="text" name="proof" id="proof" placeholder="proof">
+        <select name="proof" id="">
+            <option value="">Verification</option>
+            <option value="Verified">Verified</option>
+            <option value="Not Verified">Not Verified</option>
+        </select>
+        <!-- <input type="text" name="proof" id="proof" placeholder="verification"> -->
     </div>
     <div class="input-field">
         <select name="operation" id="operation">
@@ -70,7 +84,7 @@
         <th scope="col">StudentId</th>
         <th scope="col">Title</th>
         <th scope="col">Technical</th>
-        <th scope="col">Proof</th>
+        <th scope="col">Verified</th>
         <th scope="col">Institution</th>
       </tr>
     </thead>

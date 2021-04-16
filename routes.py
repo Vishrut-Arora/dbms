@@ -489,7 +489,7 @@ def professor_insert_queries():
 def Sports_Cultural_Queries():
     achievementDetails = ""
     option=0
-    form=forms.AddUserForm()
+    # form=forms.AddUserForm()
     result=request.form
     roll_calls=""
     roll_institution=""
@@ -497,7 +497,7 @@ def Sports_Cultural_Queries():
     try:
         cur = connect_to_db()
         cur.execute(f"""
-        Select "StudentId" from "Achievement" Where "Technical"=false;
+            Select "StudentId" from "Achievement" Where "Technical"=false;
         """)
         roll_calls = cur.fetchall()
         print(roll_calls)
@@ -533,7 +533,7 @@ def Sports_Cultural_Queries():
     try:
         cur = connect_to_db()
         cur.execute(f"""
-        Select "Title" from "Achievement" Where "Technical"=false ;
+            Select "Title" from "Achievement" Where "Technical"=false ;
         """)
         roll_title = cur.fetchall()
         print(roll_title)
@@ -594,8 +594,8 @@ def Sports_Cultural_Queries():
                 cur = connect_to_db()
                 print("befor")
                 cur.execute(f"""
-                Select * from "Achievement"
-                Where "Technical"=false
+                    Select * from "Achievement"
+                    Where "Technical"=false
                 """)
                 achievementDetails = cur.fetchall()
                 option=1
