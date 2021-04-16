@@ -1145,18 +1145,16 @@ def RecruiterQueries():
             except Exception as e:
                 print(e)
 
-    if("Profile" in result):
-        try:
-            print("before")
-            cur=connect_to_db()
-            cur.execute(f""" select * from "Recruiter" where "UserId"='{result['Id']}';
-            """)
-            g=cur.fetchall()
-            print(cur.fetchall())
-            print("after")
-            cur.close()
-        except Exception as e:
-            print(e)
+    # if("Profile" in result):
+    try:
+        cur=connect_to_db()
+        cur.execute(f""" select * from "Recruiter" where "UserId"='{session['user']['EmailID']}';
+        """)
+        g=cur.fetchall()[0]
+        g_headers = [h[0] for h in cur.description]
+        cur.close()
+    except Exception as e:
+        print(e)
 
     if("Show_Details" in result):
         try:
@@ -1175,4 +1173,15 @@ def RecruiterQueries():
 
 
 
-    return render_template('Recruiter.html',x=x,y=y,z=z,u=u,v=v,a=a,b=b,d=d,g=g,f=f)
+    return render_template('Recruiter.html',
+        x=x,
+        y=y,
+        z=z,
+        u=u,
+        v=v,
+        a=a,
+        b=b,
+        d=d,
+        g=list(zip(g_headers,g)),
+        f=f,
+        user = session['user'])
