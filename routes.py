@@ -798,7 +798,6 @@ def Academic():
     div2=0
     div3=0
     roll_calls=""
-    form=forms.AddUserForm()
     result=request.form
     try:
         cur = connect_to_db()
