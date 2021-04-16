@@ -622,6 +622,21 @@ def Sports_Cultural_Queries():
                     cur.close()
                 except Exception as e:
                     print(e)  
+            elif(institution=="Any"):
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "Title" LIKE '%{title}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)                
             else:
                 try:
                     cur = connect_to_db()
@@ -633,7 +648,7 @@ def Sports_Cultural_Queries():
                     achievementDetails = cur.fetchall()
                     option=1
                     print(cur.fetchall())
-                    print("after")
+                    print("after ok")
                     cur.close()
                 except Exception as e:
                     print(e)
