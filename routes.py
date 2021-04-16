@@ -913,7 +913,14 @@ def Academic():
             except Exception as e:
                 print(e)
 
-    return render_template('Academic.html', studentDetails = studentDetails,div1=div1,div2=div2,div3=div3,roll_calls=roll_calls)
+    return render_template(
+        'Academic.html',
+        studentDetails = studentDetails,
+        div1=div1,
+        div2=div2,
+        div3=div3,
+        roll_calls=roll_calls,
+        user = session['user'])
 
 #######################################################################################################################################
 #                             RECRUITER

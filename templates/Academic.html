@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2> Academic Queries</h2>
+<h1> Academic Department</h1>
 <table class="table table-striped">
     <thead>
       <tr>
@@ -52,7 +52,7 @@
       <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Show</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Profile</a>
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -124,7 +124,20 @@
         </table>
         {% endif %}
     </div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="table-responsive shadow rounded">
+            <table class="table">
+                <tbody>
+                    {% for k,v in user.items() %}
+                    <tr>                    
+                            <th>{{k}}</th>
+                            <td>{{v}}</td>    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
