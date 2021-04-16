@@ -300,7 +300,7 @@ def professor():
 def Sports_Cultural_Queries():
     achievementDetails = ""
     option=0
-    form=forms.AddUserForm()
+    # form=forms.AddUserForm()
     result=request.form
     roll_calls=""
     roll_institution=""
@@ -308,7 +308,7 @@ def Sports_Cultural_Queries():
     try:
         cur = connect_to_db()
         cur.execute(f"""
-        Select "StudentId" from "Achievement" Where "Technical"=false;
+            Select "StudentId" from "Achievement" Where "Technical"=false;
         """)
         roll_calls = cur.fetchall()
         print(roll_calls)
@@ -344,7 +344,7 @@ def Sports_Cultural_Queries():
     try:
         cur = connect_to_db()
         cur.execute(f"""
-        Select "Title" from "Achievement" Where "Technical"=false ;
+            Select "Title" from "Achievement" Where "Technical"=false ;
         """)
         roll_title = cur.fetchall()
         print(roll_title)
@@ -370,9 +370,9 @@ def Sports_Cultural_Queries():
             try:
                 cur = connect_to_db()
                 cur.execute(f"""
-                UPDATE "Achievement"  
-                SET "Proof"={proof}
-                Where "StudentId"={studentID} AND "Title"={title} AND "Technical"=false 
+                    UPDATE "Achievement"  
+                    SET "Proof"='{proof}'
+                    Where "StudentId"={studentID} AND "Title"='{title}' AND "Technical"=false;
 
                 """)
                 
@@ -405,8 +405,8 @@ def Sports_Cultural_Queries():
                 cur = connect_to_db()
                 print("befor")
                 cur.execute(f"""
-                Select * from "Achievement"
-                Where "Technical"=false
+                    Select * from "Achievement"
+                    Where "Technical"=false
                 """)
                 achievementDetails = cur.fetchall()
                 option=1
@@ -431,6 +431,21 @@ def Sports_Cultural_Queries():
                     cur.close()
                 except Exception as e:
                     print(e)  
+            elif(institution=="Any"):
+                try:
+                    cur = connect_to_db()
+                    print("befor")
+                    cur.execute(f"""
+                    Select * from "Achievement"
+                    Where "Title" LIKE '%{title}%' AND "Technical"=false 
+                    """)
+                    achievementDetails = cur.fetchall()
+                    option=1
+                    print(cur.fetchall())
+                    print("after")
+                    cur.close()
+                except Exception as e:
+                    print(e)                
             else:
                 try:
                     cur = connect_to_db()
@@ -442,7 +457,7 @@ def Sports_Cultural_Queries():
                     achievementDetails = cur.fetchall()
                     option=1
                     print(cur.fetchall())
-                    print("after")
+                    print("after ok")
                     cur.close()
                 except Exception as e:
                     print(e)
@@ -577,7 +592,13 @@ def Sports_Cultural_Queries():
         #     except Exception as e:
         #         print(e)
     print(roll_title,roll_institution)
-    return render_template('Sports_Cultural.html', achievementDetails = achievementDetails,option=option,roll_calls=roll_calls,roll_institution=roll_institution,roll_title=roll_title)
+    return render_template('Sports_Cultural.html', 
+        achievementDetails = achievementDetails,
+        option=option,
+        roll_calls=roll_calls,
+        roll_institution=roll_institution,
+        roll_title=roll_title,
+        user = session['user'])
 ######################################################################################
 #                                  ACADEMIC
 ######################################################################################
@@ -588,7 +609,6 @@ def Academic():
     div2=0
     div3=0
     roll_calls=""
-    form=forms.AddUserForm()
     result=request.form
     try:
         cur = connect_to_db()
@@ -704,7 +724,14 @@ def Academic():
             except Exception as e:
                 print(e)
 
-    return render_template('Academic.html', studentDetails = studentDetails,div1=div1,div2=div2,div3=div3,roll_calls=roll_calls)
+    return render_template(
+        'Academic.html',
+        studentDetails = studentDetails,
+        div1=div1,
+        div2=div2,
+        div3=div3,
+        roll_calls=roll_calls,
+        user = session['user'])
 
 #######################################################################################################################################
 #                             RECRUITER
@@ -929,18 +956,16 @@ def RecruiterQueries():
             except Exception as e:
                 print(e)
 
-    if("Profile" in result):
-        try:
-            print("before")
-            cur=connect_to_db()
-            cur.execute(f""" select * from "Recruiter" where "UserId"='{result['Id']}';
-            """)
-            g=cur.fetchall()
-            print(cur.fetchall())
-            print("after")
-            cur.close()
-        except Exception as e:
-            print(e)
+    # if("Profile" in result):
+    try:
+        cur=connect_to_db()
+        cur.execute(f""" select * from "Recruiter" where "UserId"='{session['user']['EmailID']}';
+        """)
+        g=cur.fetchall()[0]
+        g_headers = [h[0] for h in cur.description]
+        cur.close()
+    except Exception as e:
+        print(e)
 
     if("Show_Details" in result):
         try:
@@ -959,4 +984,105 @@ def RecruiterQueries():
 
 
 
-    return render_template('Recruiter.html',x=x,y=y,z=z,u=u,v=v,a=a,b=b,d=d,g=g,f=f)
+    return render_template('Recruiter.html',
+        x=x,
+        y=y,
+        z=z,
+        u=u,
+        v=v,
+        a=a,
+        b=b,
+        d=d,
+        g=list(zip(g_headers,g)),
+        f=f,
+        user = session['user'])
+
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin():
+
+    if 'Batch' in request.form:
+        batch = request.form['batch']
+        rollNo = request.form['rollNo']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE "Student"
+                SET "Batch" = {batch}
+                WHERE "RollNo" = {rollNo};
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+    if 'ParentId' in request.form:
+        parentId = request.form['parentId']
+        rollNo = request.form['rollNo']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE "Student"
+                SET "ParentId" = {parentId}
+                WHERE "RollNo" = {rollNo};
+
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+
+    if 'Password' in request.form:
+        EmailId = request.form['EmailID']
+        Password = request.form['password']
+        try:
+            cur = connect_to_db()
+            cur.execute(f"""
+                UPDATE User
+                SET Password = '{Password}'
+                WHERE EmailId = '{EmailId}';
+            """)
+        except Exception as e:
+            print(e)
+        cur.close()
+        # print(request.form)
+
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "RollNo"
+        from "Student";
+    
+    """)
+    roll_numbers = [i[0] for i in cur.fetchall()]
+    cur.close()
+    
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "EmailID"
+        from "User"
+        where "Designation" = 'Parent';
+    """)
+    parentIds = [i[0] for i in cur.fetchall()]
+    cur.close()
+
+    cur = connect_to_db()
+    cur.execute(f"""
+        select *
+        from "Student";
+    """)
+    students = cur.fetchall()
+    students_headers = [h[0] for h in cur.description]
+    cur.close()
+    
+    cur = connect_to_db()
+    cur.execute(f"""
+        select "EmailID"
+        from "User";
+    """)
+    emailids = [i[0] for i in cur.fetchall()]
+    # students_headers = [h[0] for h in cur.description]
+    cur.close()
+
+    return render_template('admin.html', 
+        roll_numbers = roll_numbers,
+        students = students,
+        students_headers = students_headers,
+        parentIds = parentIds,
+        emailids = emailids
+    )
