@@ -557,7 +557,6 @@ def Sports_Cultural_Queries():
 
         if(result["operation"]=="Update"):
             try:
-                print("I m here")
                 cur = connect_to_db()
                 cur.execute(f"""
                     UPDATE "Achievement"  
@@ -567,7 +566,6 @@ def Sports_Cultural_Queries():
                 """)
                 
                 cur.close()
-                print("I m here")
             except Exception as e:
                 print(e)
         if(result["operation"]=="Delete"):
@@ -783,7 +781,13 @@ def Sports_Cultural_Queries():
         #     except Exception as e:
         #         print(e)
     print(roll_title,roll_institution)
-    return render_template('Sports_Cultural.html', achievementDetails = achievementDetails,option=option,roll_calls=roll_calls,roll_institution=roll_institution,roll_title=roll_title)
+    return render_template('Sports_Cultural.html', 
+        achievementDetails = achievementDetails,
+        option=option,
+        roll_calls=roll_calls,
+        roll_institution=roll_institution,
+        roll_title=roll_title,
+        user = session['user'])
 ######################################################################################
 #                                  ACADEMIC
 ######################################################################################

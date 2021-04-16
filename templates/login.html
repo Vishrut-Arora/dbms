@@ -75,9 +75,9 @@
         {% elif  user.Designation == 'Academic Department' %}
         <button class = "btn btn-success"><a href="{{ url_for('academic') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Sports Committee' %}
-        <button class = "btn btn-success"><a href="{{ url_for('sports') }}"> Click here to continue.</a></button>
+        <button class = "btn btn-success"><a href="{{ url_for('Sports_Cultural_Queries') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Cultural Commitee' %}
-        <button class = "btn btn-success"><a href="{{ url_for('cultural') }}"> Click here to continue.</a></button>
+        <button class = "btn btn-success"><a href="{{ url_for('Sports_Cultural_Queries') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Placement Committee' %}
         <button class = "btn btn-success"><a href="{{ url_for('placement') }}"> Click here to continue.</a></button>
         {% endif %}
