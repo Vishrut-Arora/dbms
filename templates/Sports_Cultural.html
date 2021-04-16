@@ -1,107 +1,107 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2> Sports_Cultural Queries</h2>
-<h1>UPDATE ACHIEVEMENTS(RELATED TO SPORTS AND CULTURAL)</h1>
-<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
-    <div class="input-field">
+    <h2> Sports_Cultural Queries</h2>
+    <h1>UPDATE ACHIEVEMENTS(RELATED TO SPORTS AND CULTURAL)</h1>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
         <div class="input-field">
-            <select name="studentID" id="studentID">
+            <div class="input-field">
+                <select name="studentID" id="studentID">
+                    <!-- <option value="">designation</option> -->
+                    <option value="">RollNo</option>
+                    {% for row in roll_calls %}
+                        <option value={{row}}>{{row}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- <input type="number" name="studentID" id="studentID" placeholder="studentID"> -->
+        </div>
+        <div class="input-field">
+            <input type="text" name="title" id="title" placeholder="title">
+        </div>
+        <div class="input-field">
+            <select name="proof" id="">
+                <option value="">Verification</option>
+                <option value="Verified">Verified</option>
+                <option value="Not Verified">Not Verified</option>
+            </select>
+            <!-- <input type="text" name="proof" id="proof" placeholder="verification"> -->
+        </div>
+        <div class="input-field">
+            <select name="operation" id="operation">
                 <!-- <option value="">designation</option> -->
-                <option value="">RollNo</option>
-                {% for row in roll_calls %}
-                    <option value={{row}}>{{row}}</option>
-                {% endfor %}
+                <option value="Update">Update</option>
+                <option value="Delete">Delete</option>
+                <!-- <option value="Male"></option> -->
             </select>
         </div>
-        <!-- <input type="number" name="studentID" id="studentID" placeholder="studentID"> -->
-    </div>
-    <div class="input-field">
-        <input type="text" name="title" id="title" placeholder="title">
-    </div>
-    <div class="input-field">
-        <select name="proof" id="">
-            <option value="">Verification</option>
-            <option value="Verified">Verified</option>
-            <option value="Not Verified">Not Verified</option>
-        </select>
-        <!-- <input type="text" name="proof" id="proof" placeholder="verification"> -->
-    </div>
-    <div class="input-field">
-        <select name="operation" id="operation">
-            <!-- <option value="">designation</option> -->
-            <option value="Update">Update</option>
-            <option value="Delete">Delete</option>
-            <!-- <option value="Male"></option> -->
-        </select>
-    </div>
-    <button type="submit" name="Achievement-submit">UPDATE ACHIEVEMENTS</button>
-    
-</form>
-<h1>SHOW ACHIEVEMENTS</h1>
-<form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
-    <div class="input-field">
-        <select name="operation2" id="operation2">
-            <!-- <option value="">designation</option> -->
-            <option value="Any">RollNo</option>
-            {% for row in roll_calls: %}
-                <option value={{row}}>{{row}}</option>
-            {% endfor %}
-            
-            <!-- <option value="Male"></option> -->
-        </select>
-    </div>
-    <div class="input-field">
-        <select name="operation3" id="operation3">
-            <!-- <option value="">designation</option> -->
-            <option value="Any">Title</option>
-            {% for row in roll_title: %}
-                <option value={{row}}>{{row}}</option>
-            {% endfor %}
-            <!-- <option value="Male"></option> -->
-        </select>
-    </div>
-    <div class="input-field">
-        <select name="operation4" id="operation4">
-            <!-- <option value="">designation</option> -->
-            <option value="Any">Institution</option>
-            {% for row in roll_institution: %}
-                <option value={{row}}>{{row}}</option>
-            {% endfor %}
-            <!-- <option value="Male"></option> -->
-        </select>
-    </div>
-        <!-- <div class="input-field">
-            <input type="text" name="any" id="any" placeholder="Enter here">
-        </div> -->
-    <button type="submit" name="Search-submit">Search</button>
-    
-</form>
-{% if achievementDetails %}
-<table class="table table-success table-striped">
-    <thead>
-      <tr>
-        <th scope="col">StudentId</th>
-        <th scope="col">Title</th>
-        <th scope="col">Technical</th>
-        <th scope="col">Verified</th>
-        <th scope="col">Institution</th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for row in achievementDetails: %}
-
+        <button type="submit" name="Achievement-submit">UPDATE ACHIEVEMENTS</button>
+        
+    </form>
+    <h1>SHOW ACHIEVEMENTS</h1>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+        <div class="input-field">
+            <select name="operation2" id="operation2">
+                <!-- <option value="">designation</option> -->
+                <option value="Any">RollNo</option>
+                {% for row in roll_calls: %}
+                    <option value={{row}}>{{row}}</option>
+                {% endfor %}
+                
+                <!-- <option value="Male"></option> -->
+            </select>
+        </div>
+        <div class="input-field">
+            <select name="operation3" id="operation3">
+                <!-- <option value="">designation</option> -->
+                <option value="Any">Title</option>
+                {% for row in roll_title: %}
+                    <option value={{row}}>{{row}}</option>
+                {% endfor %}
+                <!-- <option value="Male"></option> -->
+            </select>
+        </div>
+        <div class="input-field">
+            <select name="operation4" id="operation4">
+                <!-- <option value="">designation</option> -->
+                <option value="Any">Institution</option>
+                {% for row in roll_institution: %}
+                    <option value={{row}}>{{row}}</option>
+                {% endfor %}
+                <!-- <option value="Male"></option> -->
+            </select>
+        </div>
+            <!-- <div class="input-field">
+                <input type="text" name="any" id="any" placeholder="Enter here">
+            </div> -->
+        <button type="submit" name="Search-submit">Search</button>
+        
+    </form>
+    {% if achievementDetails %}
+    <table class="table table-success table-striped">
+        <thead>
         <tr>
-            <!-- <th scope="row">1</th> -->
-            <td>{{row[0]}}</td>
-            <td>{{row[1]}}</td>
-            <td>{{row[2]}}</td>
-            <td>{{row[3]}}</td>
-            <td>{{row[4]}}</td>
-            
+            <th scope="col">StudentId</th>
+            <th scope="col">Title</th>
+            <th scope="col">Technical</th>
+            <th scope="col">Verified</th>
+            <th scope="col">Institution</th>
         </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+        </thead>
+        <tbody>
+            {% for row in achievementDetails: %}
+
+            <tr>
+                <!-- <th scope="row">1</th> -->
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 {% endblock %}

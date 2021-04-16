@@ -557,15 +557,17 @@ def Sports_Cultural_Queries():
 
         if(result["operation"]=="Update"):
             try:
+                print("I m here")
                 cur = connect_to_db()
                 cur.execute(f"""
-                UPDATE "Achievement"  
-                SET "Proof"={proof}
-                Where "StudentId"={studentID} AND "Title"={title} AND "Technical"=false 
+                    UPDATE "Achievement"  
+                    SET "Proof"='{proof}'
+                    Where "StudentId"={studentID} AND "Title"='{title}' AND "Technical"=false;
 
                 """)
                 
                 cur.close()
+                print("I m here")
             except Exception as e:
                 print(e)
         if(result["operation"]=="Delete"):
