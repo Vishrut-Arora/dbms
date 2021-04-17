@@ -18,7 +18,7 @@
                 <div class="container col-6 shadow rounded p-5 ">
                     <h3>UPDATE ACHIEVEMENTS(RELATED TO SPORTS AND CULTURAL)</h3>
                     <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
-                        <div class="input-field">
+                        
                             <div class="input-field">
                                 <select name="studentID" id="studentID">
                                     <!-- <option value="">designation</option> -->
@@ -29,12 +29,19 @@
                                 </select>
                             </div>
                             <!-- <input type="number" name="studentID" id="studentID" placeholder="studentID"> -->
+            
+                        <div class="input-field">
+                            <select name="title" id="title">
+                                <!-- <option value="">designation</option> -->
+                                <option value="title">Title</option>
+                                {% for row in roll_title: %}
+                                    <option value={{row}}>{{row}}</option>
+                                {% endfor %}
+                                <!-- <option value="Male"></option> -->
+                            </select>
                         </div>
                         <div class="input-field">
-                            <input type="text" name="title" id="title" placeholder="title">
-                        </div>
-                        <div class="input-field">
-                            <select name="proof" id="">
+                            <select name="proof" id="proof">
                                 <option value="">Verification</option>
                                 <option value="Verified">Verified</option>
                                 <option value="Not Verified">Not Verified</option>
