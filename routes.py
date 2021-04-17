@@ -689,6 +689,8 @@ def Sports_Cultural_Queries():
                             print(e)
 
 # ################################################################################
+# Delete Sports and Achievements
+# ################################################################################
         if(result["operation"]=="Delete"):    
             if(studentID=="RollNo"):
                 if(title!="Title" and proof!="Verification"):
