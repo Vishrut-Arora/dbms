@@ -129,42 +129,6 @@ def register():
 def logout():
     return redirect(url_for('login'))
 
-<<<<<<< HEAD
-@app.route('/student', methods=['GET', 'POST'])
-def student():
-    # education_list = ""
-    # myProjects = ""
-    # rollNo = ""
-    # result=request.form
-    
-    # try:
-    #     cur=connect_to_db()
-    #     cur.execute(f"""
-    #         SELECT "RollNo" FROM "Student"
-    #         WHERE "UserId" = '{session['user']["EmailID"]}'
-    #     """)
-    #     rollNo = cur.fetchall()[0][0]
-    #     print("The roll no. is:", rollNo) 
-    #     cur.close()
-    # except Exception as e:
-    #     print(e)
-
-    # if('myProjects' in result):
-    #     try:
-    #         cur=connect_to_db()
-    #         cur.execute(f""" SELECT * FROM "Project"
-    #             WHERE "ProjectId" IN(
-    #             SELECT "ProjectId" FROM "Indulged"
-    #             WHERE "StudentId" = {rollNo}
-    #             );
-    #         """)
-    #         myProjects = cur.fetchall()
-    #         cur.close()
-    #     except Exception as e:
-    #         print(e)
-
-    return render_template('student.html')
-=======
 @app.route('/student',methods=['GET', 'POST'])
 def student():
     print(session)
@@ -238,7 +202,6 @@ def student():
             print(e)
     
     return render_template('student.html',gpa=gpa,bio=CurrBio,skills=skills,Achivements=achievement)
->>>>>>> 05e8abad5e847b38ac7637ad515cfb8e8fb71f55
 
 @app.route('/parent',methods=['GET', 'POST'])
 def parent():
