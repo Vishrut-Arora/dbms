@@ -551,35 +551,165 @@ def Sports_Cultural_Queries():
     if("Achievement-submit" in result):
         print("in Achievement-submit")
         print(result)
+        print("ohh acha")
         studentID=result["studentID"]
         title=result["title"]
         proof=result["proof"]
-
+#################################################################################
+## UPDATE SPORTS ACHIEVEMENTS 
+#################################################################################
         if(result["operation"]=="Update"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                    UPDATE "Achievement"  
-                    SET "Proof"='{proof}'
-                    Where "StudentId"={studentID} AND "Title"='{title}' AND "Technical"=false;
+          
+            if(studentID=="RollNo"):
+                if(title!="Title" and proof!="Verification"):
+                    try:
+                        cur = connect_to_db()
+                        cur.execute(f"""
+                            UPDATE "Achievement"  
+                            SET "Proof"='{proof}'
+                            Where "Title" LIKE '%{title}%' AND "Technical"=false;
 
-                """)
-                
-                cur.close()
-            except Exception as e:
-                print(e)
-        if(result["operation"]=="Delete"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                Delete from "Achievement" 
-                Where "StudentId" ={studentID} and "Title"={title};
+                        """)
+                        print(cur.fetchall())
+                        cur.close()
+                    except Exception as e:
+                        print(e)
+            else:
+                if(title=="Title"):
+                    if(proof!="Verification"):
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            UPDATE "Achievement"  
+                            SET "Proof"='{proof}'
+                            Where "StudentId"={studentID} AND "Technical"=false;
+                            """)
+                            print(cur.fetchall())
+                           # print("Hello1", cur.fetchall())     
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+                else:
+                    if(proof=="Verification"):
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            UPDATE "Achievement"  
+                            SET "Title"='{title}'
+                            Where "StudentId"={studentID} AND "Technical"=false;
 
-                """)
-                
-                cur.close()
-            except Exception as e:
-                print(e)
+                            """)
+                            print(cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+                    else:
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            UPDATE "Achievement"  
+                            SET "Proof"='{proof}'
+                            Where "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Technical"=false;
+                            """)
+                            print("Pakode")
+                            print(cur.fetchall())
+                           # print("Hello2", cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+
+# ################################################################################
+        if(result["operation"]=="Delete"):    
+            if(studentID=="RollNo"):
+                if(title!="Title" and proof!="Verification"):
+                    try:
+                        cur = connect_to_db()
+                        cur.execute(f"""
+                            Delete from "Achievement"
+                            Where "Proof" LIKE '%{proof}%' AND "Title" LIKE '%{title}%' AND "Technical"=false;
+                        """)
+                        print("Pakoda2")
+                        print(cur.fetchall())
+                        cur.close()
+                    except Exception as e:
+                        print(e)
+
+                elif(title!="Title"):
+                    try:
+                        cur = connect_to_db()
+                        cur.execute(f"""
+                            Delete from "Achievement" 
+                            Where "Title" LIKE '%{title}%' AND "Technical"=false;
+                        """)
+                        print(cur.fetchall())
+                        cur.close()
+                    except Exception as e:
+                        print(e)
+                elif(proof!="Verification"):
+                    try:
+                        cur = connect_to_db()
+                        cur.execute(f"""
+                            Delete from "Achievement" 
+                            Where "Proof" LIKE '%{proof}%' AND "Technical"=false;
+                        """)
+                        print(cur.fetchall())
+                        cur.close()
+                    except Exception as e:
+                        print(e)
+            else:
+                if(title=="Title"):
+                    if(proof!="Verification"):
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            Delete from "Achievement" 
+                            Where "Proof" LIKE '%{proof}%' AND "StudentId"={studentID} AND "Technical"=false;
+
+                            """)
+                            print(cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+                    else:
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            Delete from "Achievement" 
+                            Where "StudentId"={studentID} AND "Technical"=false;
+
+                            """)
+                            print(cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+
+                else:
+                    if(proof=="Verification"):
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            Delete from "Achievement" 
+                            Where "Title" LIKE '%{title}%' AND "StudentId"={studentID} AND "Technical"=false;
+
+                            """)
+                            print(cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)
+                    else:
+                        try:
+                            cur = connect_to_db()
+                            cur.execute(f"""
+                            Delete from "Achievement"  
+                            Where "Proof" LIKE '%{proof}%' AND "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Technical"=false;
+                            """)
+                            print("Pakoda3")
+                            print(cur.fetchall())
+                            cur.close()
+                        except Exception as e:
+                            print(e)            
+##################################################################################
+
     if("Search-submit" in result):
         if(result["operation2"]=="Any"):
             studentID=result["operation2"]
@@ -599,7 +729,6 @@ def Sports_Cultural_Queries():
                 """)
                 achievementDetails = cur.fetchall()
                 option=1
-                print(cur.fetchall())
                 print("after")
                 cur.close()
             except Exception as e:
@@ -615,7 +744,6 @@ def Sports_Cultural_Queries():
                     """)
                     achievementDetails = cur.fetchall()
                     option=1
-                    print(cur.fetchall())
                     print("after")
                     cur.close()
                 except Exception as e:
@@ -630,7 +758,6 @@ def Sports_Cultural_Queries():
                     """)
                     achievementDetails = cur.fetchall()
                     option=1
-                    print(cur.fetchall())
                     print("after")
                     cur.close()
                 except Exception as e:
@@ -645,7 +772,6 @@ def Sports_Cultural_Queries():
                     """)
                     achievementDetails = cur.fetchall()
                     option=1
-                    print(cur.fetchall())
                     print("after ok")
                     cur.close()
                 except Exception as e:
@@ -705,6 +831,7 @@ def Sports_Cultural_Queries():
                     Select * from "Achievement"
                     Where "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Technical"=false 
                     """)
+                    print("Pakoda4")
                     achievementDetails = cur.fetchall()
                     option=1
                     print(cur.fetchall())
@@ -720,6 +847,7 @@ def Sports_Cultural_Queries():
                 Select * from "Achievement"
                 Where "StudentId"={studentID} AND "Title" LIKE '%{title}%' AND "Institution" LIKE '%{institution}%' AND "Technical"=false 
                 """)
+                print("Pakoda5")
                 achievementDetails = cur.fetchall()
                 option=1
                 print(cur.fetchall())
