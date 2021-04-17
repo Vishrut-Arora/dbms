@@ -1,21 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>
+    <h2>See your GPA</h2>
+    <h3>Your Current GPA is {{gpa}}</h3>
+</div>
+<div>
+    <h2>Update BIO</h2>
+     <h3> Your Current Bio <br> {{bio}}</h3>
     <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
         <div class="input-field">
-            <input type="number" name="professorID" id="professorID" placeholder="professorID">
-            <input type="number" name="educationID" id="educationID" placeholder="educationID" class="mx-3">
-            <select name="operation" id="operation">
-                <!-- <option value="">designation</option> -->
-                <option value="Insert">Insert</option>
-                <option value="Update">Update</option>
-                <option value="Delete">Delete</option>
-                <!-- <option value="Male"></option> -->
-            </select>
+            <input type="string" name="bio" id="bio" placeholder="Your Bio">
+
         </div>
         
-        <button type="submit" name="education-submit" class="">UPDATE EDUCATION</button>
+        <button type="submit" name="UpdateBio" class="">Update Bio</button>
         
     </form>
 </div>
+<div>
+    <h2>Your Skills</h2>
+     <h3>{{skills}}</h3>
+     <h4>Add new Skills</h4>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+        <div class="input-field">
+            <input type="string" name="title" id="title" placeholder="Name Of the Skill">
+            <input type="string" name="url" id="url" placeholder="Link to Certificate">
+        </div>
+        
+        <button type="submit" name="AddSkill" class="">Update Skills</button>
+        
+    </form>
+</div>
+<div>
+    <h2>Your Achivements</h2>
+     <h3>{{Achivements}}</h3>
+     <h4>Add new Achivements</h4>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+        <div class="input-field">
+            <input type="string" name="institute" id="institute" placeholder="Name of the institution">
+            <input type="string" name="title" id="title" placeholder="Title for Achivement">
+            <select name="type" id="type">
+                <option value="tech">Technical</option>
+                <option value="nonTech">Non Technical</option>
+            </select>
+            <input type="string" name="proof" id="proof" placeholder="Attach link For proof">
+        </div>
+        
+        <button type="submit" name="AddAch" class="">Add Achivement</button>
+        
+    </form>
+</div>
+<!-- <div>
+    <h2>Your Education</h2>
+     <h3>{{education}}</h3>
+     <h4>Add new education</h4>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+        <div class="input-field">
+            <input type="string" name="institute" id="institute" placeholder="Name of the institution">
+            <input type="string" name="title" id="title" placeholder="Title for Achivement">
+            <select name="type" id="type">
+                <option value="tech">Technical</option>
+                <option value="nonTech">Non Technical</option>
+            </select>
+            <input type="string" name="proof" id="proof" placeholder="Attach link For proof">
+        </div>
+        
+        <button type="submit" name="AddAch" class="">Add Achivement</button>
+        
+    </form>
+</div> -->
+            <!-- <input type="number" name="educationID" id="educationID" placeholder="educationID" class="mx-3">
+            <select name="operation" id="operation">
+                
+                <option value="Insert">Insert</option>
+                <option value="Update">Update</option>
+                <option value="Delete">Delete</option>
+              
+            </select> -->
 {% endblock %}

@@ -131,8 +131,77 @@ def logout():
 
 @app.route('/student',methods=['GET', 'POST'])
 def student():
+    print(session)
+    gpa=0
+    rollno=0
+    CurrBio=''
+    CuuSkills=''
+    result=request.form
+    try:
+        print("start")
+        cur=connect_to_db()
+        cur.execute(f""" 
+                    Select  "RollNo" from "Student" where "UserId" = '{session['user']['EmailID']}';
+                """)
+        rollno=cur.fetchall()
+        rollno=rollno[0][0]
+        print(rollno)
+        cur.execute(f"""
+        Select  "Bio" from "Student" where "RollNo" = {rollno};
+        """)
+        CurrBio=cur.fetchall()
+        CurrBio=CurrBio[0][0]
+        cur.execute(f""" 
+                Select  "GPA" from "Student" where "UserId" = '{session['user']['EmailID']}';
+            """)
+        gpa=cur.fetchall()
+        gpa=gpa[0][0]
+        cur.execute(f"""
+        Select "Title" from "Skill" where "StudentId"={rollno}
+        """)
+        skills=cur.fetchall()
+        cur.execute(f"""
+        select "Title" from "Achievement" where "StudentId"={rollno};
+        """)
+        achievement=cur.fetchall()
+        cur.close()
+    except Exception as E:
+        print(E)
+    ###BIO
+    if('UpdateBio' in result):
+        try:
+            cur=connect_to_db()
+            cur.execute(f""" 
+                Update "Student" set "Bio"='{result['bio']}' where "RollNo"={rollno};
+            """)
+            CurrBio=result['bio']
+            cur.close()
+        except Exception as e:
+            print(e)
+    if('AddSkill' in result):
+        try:
+            cur=connect_to_db()
+            cur.execute(f""" 
+                Insert into "Skill" values ({rollno}, '{result["title"]}', '{result['url']}');
+            """)
+            cur.close()
+        except Exception as e:
+            print(e)
+    if('AddAch' in result):
+        print(result)
+        try:
+            cur=connect_to_db()
+            x=False
+            if(result['type']=='tech'):
+                x=True
+            cur.execute(f""" 
+                Insert into "Achievement" values ({rollno}, '{result['title']}', '{x}', '{result['proof']}', '{result['institute']}');
+            """)
+            cur.close()
+        except Exception as e:
+            print(e)
     
-    return render_template('users.html')
+    return render_template('student.html',gpa=gpa,bio=CurrBio,skills=skills,Achivements=achievement)
 
 @app.route('/parent',methods=['GET', 'POST'])
 def parent():
