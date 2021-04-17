@@ -224,7 +224,7 @@ def parent():
     return render_template('parents.html',achievements=x, user = session['user'])
 
 @app.route('/professor', methods=['GET', 'POST'])
-def professorQueries():
+def professor():
     result = request.form
     mentor=""
     studentWorkingProjects=""
@@ -304,7 +304,7 @@ def professorQueries():
         print("in education-submit")
         print(result)
         educationID = result["educationID"]
-        professorID = result["professorID"]
+        professorID = session['user']["EmailID"]
         if(result["operation"] == "Insert"):
             try:
                 cur = connect_to_db()
@@ -350,7 +350,7 @@ def professorQueries():
 
             cur.execute(f"""
             INSERT INTO "Project" ("ProjectId","Title","MentorId","Duration","StartDate","EndDate","Field","Domain") VALUES 
-	        ({result['AprojectID']},'{result['Title']}',{result['EmployeeId']},'{result['Duration']}','{result['StartDate']}',null,'{result['Field']}','{result['Domain']}')
+	        ({result['AprojectID']},'{result['Title']}',{session['user']["EmailID"]},'{result['Duration']}','{result['StartDate']}',null,'{result['Field']}','{result['Domain']}')
             """)
             cur.execute("""Select * from "Project" """)
             print(cur.fetchall())
@@ -361,195 +361,6 @@ def professorQueries():
     return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)
 
 
-
-@app.route('/professor-update', methods = ['GET', 'POST'])
-def professor_update_queries():
-    result = request.form
-
-    if("education-submit" in result):
-        print("in education-submit")
-        print(result)
-        educationID = result["educationID"]
-        professorID = result["professorID"]
-        if(result["operation"] == "Insert"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                INSERT INTO "Attended_Professor" ("EducationId","ProfessorId") VALUES ({educationID},{professorID})
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-        if(result["operation"] == "Update"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                UPDATE "Attended_Professor" 
-                SET "EducationId"={educationID}
-                Where "ProfessorId"={professorID}
-
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-        if(result["operation"] == "Delete"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                Delete from "Attended_Professor" 
-                Where "ProfessorId" ={professorID} and "EducationId"={educationID};
-
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-
-    return render_template('/professor/update.html')
-
-@app.route('/professor-select', methods = ['GET', 'POST'])
-def professor_select_queries():
-    result = request.form
-    mentor=""
-    studentWorkingProjects=""
-    projectsUnderStudents=""
-    studentGPA=""
-
-    if("project_underStudent" in result):
-        print(" in project_underStudent")
-        print(result)
-        if(result['rollnoGPA'] != ''):
-            try:
-                cur = connect_to_db()
-                cur.execute(
-                    f"""Select  "GPA" from "Student" where "RollNo" = {result['rollnoGPA']};""")
-                studentGPA=cur.fetchall()
-                # print(cur.fetchall())
-                cur.close()
-            except Exception as e:
-                print(e)
-        
-        if(result['rollnoPID'] != ''):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""select * from "Project" 
-                    where "ProjectId" in(
-                    Select "ProjectId" from "Indulged"
-                    Where "StudentId"= {result['rollnoPID']} 
-                    );
-                """)
-                studentWorkingProjects=cur.fetchall()
-                
-                cur.close()
-            except Exception as e:
-                print(e)
-        try:
-            cur = connect_to_db()
-            if(result['projectID'] != ''):
-                cur.execute(f"""
-            select * from "Student"
-                Where "RollNo" in (
-            Select "StudentId" from "Indulged"
-	            Where "ProjectId"={result['projectID']}
-                );
-                """)
-            projectsUnderStudents=cur.fetchall()
-            cur.close()
-        except Exception as e:
-            print(e)
-    if("mentors-submits" in result):
-        print("in mentors-submits")
-        print(result)
-        try:
-            cur = connect_to_db()
-            print("befor")
-            cur.execute(f"""
-            Select * from "Professor"
-            Where "EmployeeId" In (
-            Select "MentorId" from "Project"
-	            where "ProjectId"={result['Mentor-Project']}
-            );
-            """)
-            mentor=cur.fetchall()
-            print(cur.fetchall())
-            print("after")
-            cur.close()
-        except Exception as e:
-            print(e)
-    return render_template('/professor/select.html', mentor = mentor, studentWorkingProjects = studentWorkingProjects, projectsUnderStudents = projectsUnderStudents, studentGPA = studentGPA)
-
-@app.route('/professor-insert', methods = ['GET', 'POST'])
-def professor_insert_queries():
-    result = request.form
-
-    if("addProject-submit" in result):
-        print("in addProject-submit")
-        print(result)
-        try:
-            cur = connect_to_db()
-            print("befor")
-
-            cur.execute(f"""
-            INSERT INTO "Project" ("ProjectId","Title","MentorId","Duration","StartDate","EndDate","Field","Domain") VALUES 
-	        ({result['AprojectID']},'{result['Title']}',{result['EmployeeId']},'{result['Duration']}','{result['StartDate']}',null,'{result['Field']}','{result['Domain']}')
-            """)
-            cur.execute("""Select * from "Project" """)
-            print(cur.fetchall())
-            print("after")
-            cur.close()
-        except Exception as e:
-            print(e)
-    if("education-submit" in result):
-        print("in education-submit")
-        print(result)
-        educationID = result["educationID"]
-        professorID = result["professorID"]
-        if(result["operation"] == "Insert"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                INSERT INTO "Attended_Professor" ("EducationId","ProfessorId") VALUES ({educationID},{professorID})
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-        if(result["operation"] == "Update"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                UPDATE "Attended_Professor" 
-                SET "EducationId"={educationID}
-                Where "ProfessorId"={professorID}
-
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-        if(result["operation"] == "Delete"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                Delete from "Attended_Professor" 
-                Where "ProfessorId" ={professorID} and "EducationId"={educationID};
-
-                """)
-
-                cur.close()
-            except Exception as e:
-                print(e)
-    if('assignStudent' in result):
-        try:
-            cur=connect_to_db()
-            cur.execute(f""" Insert into "Indulged" ("ProjectId", "StudentId") values ({result['projectID']},{result['rollno']})""")
-            cur.close()
-        except Exception as e:
-            print(e)
-    
-    return render_template('/professor/insert.html')
 
 
 ######################################################################################
