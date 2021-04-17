@@ -129,9 +129,40 @@ def register():
 def logout():
     return redirect(url_for('login'))
 
-@app.route('/student')
+@app.route('/student', methods=['GET', 'POST'])
 def student():
-    return render_template('users.html')
+    education_list = ""
+    myProjects = ""
+    rollNo = ""
+    result=request.form
+    
+    try:
+        cur=connect_to_db()
+        cur.execute(f"""
+            SELECT "RollNo" FROM "Student"
+            WHERE "UserId" = '{session['user']["EmailID"]}'
+        """)
+        rollNo = cur.fetchall()[0][0]
+        print("The roll no. is:", rollNo) 
+        cur.close()
+    except Exception as e:
+        print(e)
+
+    if('myProjects' in result):
+        try:
+            cur=connect_to_db()
+            cur.execute(f""" SELECT * FROM "Project"
+                WHERE "ProjectId" IN(
+                SELECT "ProjectId" FROM "Indulged"
+                WHERE "StudentId" = {rollNo}
+                );
+            """)
+            myProjects = cur.fetchall()
+            cur.close()
+        except Exception as e:
+            print(e)
+
+    return render_template('student.html', myProjects = myProjects)
 
 @app.route('/parent',methods=['GET', 'POST'])
 def parent():
