@@ -92,7 +92,30 @@
                 <button type="submit" name="Password" class="btn btn-primary">Update</button>
             </form>        
         </div>
+
+    <div class="container">
+        <h1>Update Dean Award</h1>
+        <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+            <div class="input-field">
+                <select name="rollNo" id="" class = "form-control mb-2 mr-sm-2" >
+                    {% for roll in roll_numbers %}
+                    <option value="{{roll}}">{{roll}}</option>
+                    {% endfor %}
+                </select>
+                <!-- <input type="number" name="RollNo" id="RollNo" placeholder="RollNo of Student"> -->
+            </div>
+            <div class="input-field">
+                <select name="proof" id="proof">
+                    <option value="">Verification</option>
+                    <option value="Verified">Verified</option>
+                    <option value="Not Verified">Not Verified</option>
+                </select>
+                <!-- <input type="text" name="proof" id="proof" placeholder="verification"> -->
+            </div>
+            <button type="submit" name="Award" class="btn btn-primary">Update</button>
+        </form>        
     </div>
+</div>    
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
 
