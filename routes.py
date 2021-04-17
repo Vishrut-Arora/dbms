@@ -129,8 +129,9 @@ def register():
 def logout():
     return redirect(url_for('login'))
 
-@app.route('/student')
+@app.route('/student',methods=['GET', 'POST'])
 def student():
+    
     return render_template('users.html')
 
 @app.route('/parent',methods=['GET', 'POST'])

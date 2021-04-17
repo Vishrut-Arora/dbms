@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
+        <div class="input-field">
+            <input type="number" name="professorID" id="professorID" placeholder="professorID">
+            <input type="number" name="educationID" id="educationID" placeholder="educationID" class="mx-3">
+            <select name="operation" id="operation">
+                <!-- <option value="">designation</option> -->
+                <option value="Insert">Insert</option>
+                <option value="Update">Update</option>
+                <option value="Delete">Delete</option>
+                <!-- <option value="Male"></option> -->
+            </select>
+        </div>
+        
+        <button type="submit" name="education-submit" class="">UPDATE EDUCATION</button>
+        
+    </form>
+</div>
+{% endblock %}
