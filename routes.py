@@ -564,6 +564,31 @@ def Sports_Cultural_Queries():
     roll_calls=""
     roll_institution=""
     roll_title=""
+####################
+    try:
+        cur = connect_to_db()
+        cur.execute(f"""
+            create role Sports_Cultural_role;
+            create view Sports_Cultural_view as select * from "Achievement";
+            grant select on Sports_Cultural_view to Sports_Cultural_role;
+            grant update,select on Achievement to Sports_Cultural_role;
+            set role Sports_Cultural_role;
+        """)
+        roll_calls = cur.fetchall()
+        print(roll_calls)
+        for aa in range(len(roll_calls)):
+            str1=roll_calls[aa][0]
+            roll_calls[aa]=str1
+            print(str1)
+        print(cur.fetchall())
+        print("after")
+        cur.close()
+
+    except Exception as e:
+        print(e)
+####################
+
+
     try:
         cur = connect_to_db()
         cur.execute(f"""
@@ -1058,31 +1083,32 @@ def Academic():
         rollno=result["rollno"]
         gpa=result["gpa"]
         if(result["operation"]=="Update"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                UPDATE "Student"  
-                SET "GPA"={gpa}
-                Where "RollNo"={rollno} 
+            if(gpa!="GPA" and rollno!="RollNo"):
+                try:
+                    cur = connect_to_db()
+                    cur.execute(f"""
+                    UPDATE "Student"  
+                    SET "GPA"={gpa}
+                    Where "RollNo"={rollno} 
 
-                """)
-                
-                cur.close()
-            except Exception as e:
-                print(e)
+                    """)
+                    cur.close()
+                except Exception as e:
+                    print(e)
         if(result["operation"]=="Delete"):
-            try:
-                cur = connect_to_db()
-                cur.execute(f"""
-                UPDATE "Student"  
-                SET "GPA"={0}
-                Where "RollNo"={rollno}
+            if(rollno!="RollNo"):
+                try:
+                    cur = connect_to_db()
+                    cur.execute(f"""
+                    UPDATE "Student"  
+                    SET "GPA"={0}
+                    Where "RollNo"={rollno}
 
-                """)
-                
-                cur.close()
-            except Exception as e:
-                print(e)
+                    """)
+                    
+                    cur.close()
+                except Exception as e:
+                    print(e)
     if("Search-submit" in result):
         if(result["operation2"]=="Any"):
             try:

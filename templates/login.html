@@ -37,7 +37,7 @@
                     <option value="Recruiter">Recruiter</option>
                     <option value="Parent">Parent</option>
                     <option value="Administration Department">Admin</option>
-                    <option value="Academic Department">Academics</option>
+                    <option value="Academic Department">Academic</option>
                     <option value="Sports Committee">Sports</option>
                     <option value="Cultural Commitee">Cultural</option>
                     <option value="Placement Committee">Placement Committee</option>
@@ -73,7 +73,7 @@
         {% elif user.Designation == 'Administration Department' %}
         <button class = "btn btn-success"><a href="{{ url_for('adminstration') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Academic Department' %}
-        <button class = "btn btn-success"><a href="{{ url_for('academic') }}"> Click here to continue.</a></button>
+        <button class = "btn btn-success"><a href="{{ url_for('Academic') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Sports Committee' %}
         <button class = "btn btn-success"><a href="{{ url_for('Sports_Cultural_Queries') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Cultural Commitee' %}

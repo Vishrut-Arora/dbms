@@ -60,14 +60,33 @@
         <h1>Update GPA</h1>
         <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
             <div class="input-field">
-                <select name="operation" id="operation">
+                <select name="operation" id="operation" >
                     <!-- <option value="">designation</option> -->
                     <option value="Update">Update</option>
                     <option value="Delete">Delete</option>
                     <!-- <option value="Male"></option> -->
+                
                 </select>
-                <input type="number" name="rollno" id="rollno" placeholder="rollno" class="mx-3">
-                <input type="number" name="gpa" id="gpa" placeholder="gpa">
+                <select name="rollno" id="rollno" style="margin-left: 30px;">
+                    <!-- <option value="">designation</option> -->
+                    <option value="RollNo">RollNo</option>
+                    {% for row in roll_calls: %}
+                        <option value={{row}}>{{row}}</option>
+                    {% endfor %}
+                    
+                    <!-- <option value="Male"></option> -->
+                </select>
+                <select name="gpa" id="gpa" style="margin-left: 30px;">
+                    <!-- <option value="">designation</option> -->
+                    <option value="GPA">GPA</option>
+                    {% for i in range(11): %}
+                        <option value={{i}}>{{i}}</option>
+                    {% endfor %}
+                    
+                    <!-- <option value="Male"></option> -->
+                </select>
+                <!-- <input type="number" name="rollno" id="rollno" placeholder="rollno" class="mx-3"> -->
+                <!-- <input type="number" name="gpa" id="gpa" placeholder="gpa"  style="margin-left: 30px";> -->
             </div>
 
             <button type="submit" name="Academic-submit">UPDATE GPA</button>
