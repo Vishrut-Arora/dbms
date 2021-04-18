@@ -9,22 +9,44 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Login</title>
-    <style>
-        h1{
-            opacity: 0.1;
-        }
-        a, a:hover{
-            text-decoration: none;
-            color:black;
-        }
-    </style>
+    
 </head>
 <body>
 
 <div class="container mt-5">
-    {{user}}
+    <!-- {{user}} -->
 
-    <h1 style = "opacity:0.5;">Login</h1>
+    {% if user %}
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">EmailID</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Password</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{user.Name}}</td>
+                    <td>{{user.Age}}</td>
+                    <td>{{user.EmailID}}</td>
+                    <td>{{user.Gender}}</td>
+                    <td>{{user.Designation}}</td>
+                    <td>{{user.Password}}</td>
+                    <td>{{user.Contact}}</td>
+                    <td>{{user.Admin}}</td>
+                </tr>
+        </tbody>
+    </table>
+    {% else %}
+        <h1 >Login</h1>
+    {% endif %}
+    
     {% if not user %}
         {% if not emails %}
         <form method="POST">
@@ -43,7 +65,7 @@
                     <option value="Placement Committee">Placement Committee</option>
                 </select>
             </div>
-            <button class = "btn btn-primary col-4">Get data</button>
+            <button class = "col-4">Get data</button>
         </form>
         {% else %}
         <form method="POST">
@@ -56,32 +78,34 @@
                     {% endfor %}
                 </select>
             </div>
-            <button class = "btn btn-success">Login</button>
+            <button class = "col-4">Login</button>
         </form>
         {% endif %}
     {% else %}
         
-    <h1>Hello {{user.EmailID}}.! </h1>    
+    <h1>Hello {{user.EmailID}}.! </h1>   
+        
+    
         {% if user.Designation == 'Professor' %}
-        <button class = "btn btn-success"><a href="{{ url_for('professor') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('professor') }}"> <button class = ""> Click here to continue </button></a>
         {% elif user.Designation == 'Student' %}
-        <button class = "btn btn-success"><a href="{{ url_for('student') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('student') }}"> <button class = ""> Click here to continue </button></a>
         {% elif user.Designation == 'Parent' %}
-        <button class = "btn btn-success"><a href="{{ url_for('parent') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('parent') }}"> <button class = ""> Click here to continue </button></a>
         {% elif user.Designation == 'Recruiter' %}
-        <button class = "btn btn-success"><a href="{{ url_for('RecruiterQueries') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('RecruiterQueries') }}"> <button class = ""> Click here to continue </button></a>
         {% elif user.Designation == 'Administration Department' %}
-        <button class = "btn btn-success"><a href="{{ url_for('adminstration') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('adminstration') }}"> <button class = ""> Click here to continue </button></a>
         {% elif  user.Designation == 'Academic Department' %}
-        <button class = "btn btn-success"><a href="{{ url_for('Academic') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('Academic') }}"> <button class = ""> Click here to continue </button></a>
         {% elif  user.Designation == 'Sports Committee' %}
-        <button class = "btn btn-success"><a href="{{ url_for('Sports_Cultural_Queries') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('Sports_Cultural_Queries') }}"> <button class = ""> Click here to continue </button></a>
         {% elif  user.Designation == 'Cultural Commitee' %}
-        <button class = "btn btn-success"><a href="{{ url_for('Sports_Cultural_Queries') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('Sports_Cultural_Queries') }}"> <button class = ""> Click here to continue </button></a>
         {% elif  user.Designation == 'Placement Committee' %}
-        <button class = "btn btn-success"><a href="{{ url_for('placement') }}"> Click here to continue.</a></button>
+        <a href="{{ url_for('placement') }}"> <button class = ""> Click here to continue </button></a>
         {% endif %}
-        <button class = "btn btn-danger"><a href="{{ url_for('logout')}}">Logout</a></button>
+        <a href="{{ url_for('logout')}}"><button class = "btn btn-danger">Logout</button></a>
     {% endif %}
 
 

@@ -131,12 +131,16 @@ def logout():
 
 @app.route('/student',methods=['GET', 'POST'])
 def student():
-    print(session)
+    print("session: ",session)
     gpa=0
     rollno=0
     CurrBio=''
     CuuSkills=''
+    myProjects = ""
+    myEducation = ""
+    eligibleCompanies = ""
     result=request.form
+    print("Result", result)
     try:
         print("start")
         cur=connect_to_db()
@@ -164,6 +168,31 @@ def student():
         select "Title" from "Achievement" where "StudentId"={rollno};
         """)
         achievement=cur.fetchall()
+
+        cur.execute(f""" SELECT * FROM "Project"
+                WHERE "ProjectId" IN(
+                SELECT "ProjectId" FROM "Indulged"
+                WHERE "StudentId" = {rollno}
+                );
+            """)
+        myProjects = cur.fetchall()
+
+        cur.execute(f""" SELECT * FROM "Education"
+                WHERE "EducationId" IN(
+                SELECT "EducationId" FROM "Attended_Student"
+                WHERE "StudentId" = {rollno})
+            """)
+        myEducation = cur.fetchall()
+
+        cur.execute(f""" SELECT * FROM "Recruiter"
+                WHERE "EligibleGPA" >= (
+                SELECT "GPA" FROM "Student"
+                WHERE "RollNo" = {rollno}
+                )
+            """)
+
+        eligibleCompanies = cur.fetchall()
+        
         cur.close()
     except Exception as E:
         print(E)
@@ -200,8 +229,17 @@ def student():
             cur.close()
         except Exception as e:
             print(e)
+    if('addEducation' in result):
+        try:
+            cur=connect_to_db()
+            cur.execute(f""" 
+                Insert into "Attended_Student" ("EducationId", "StudentId") values ('{result['educationId']}', '{rollno}');
+            """)
+            cur.close()
+        except Exception as e:
+            print(e)
     
-    return render_template('student.html',gpa=gpa,bio=CurrBio,skills=skills,Achivements=achievement)
+    return render_template('student.html',gpa=gpa,bio=CurrBio,skills=skills,Achivements=achievement, myProjects = myProjects, myEducation = myEducation, eligibleCompanies = eligibleCompanies)
 
 @app.route('/parent',methods=['GET', 'POST'])
 def parent():
