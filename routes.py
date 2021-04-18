@@ -1298,13 +1298,30 @@ def admin():
         try:
             cur = connect_to_db()
             cur.execute(f"""
-                UPDATE User
-                SET Password = '{Password}'
-                WHERE EmailId = '{EmailId}';
+                UPDATE "User"
+                SET "Password" = '{Password}'
+                WHERE "EmailID" = '{EmailId}';
             """)
         except Exception as e:
             print(e)
         cur.close()
+
+    if 'Award' in request.form:
+        rollNo = request.form['rollNo']
+        Award = request.form['proof']
+        if(Award!="Verification"):
+            try:
+                cur = connect_to_db()
+                print(Award)    
+                cur.execute(f"""
+                    UPDATE "Achievement"
+                    SET "Proof" = '{Award}'
+                    WHERE "StudentId" = {rollNo} AND "Title" LIKE 'Dean List of Awardee';
+                """)
+                print(cur.fetchall())
+            except Exception as e:
+                print(e)
+            cur.close()
         # print(request.form)
 
     cur = connect_to_db()
