@@ -265,9 +265,39 @@ def parent():
 def professor():
     result = request.form
     mentor=""
+    employeeId = ""
     studentWorkingProjects=""
     projectsUnderStudents=""
+    professorEducation = ""
     studentGPA=""
+    allEducations = ""
+
+
+    try:
+        cur=connect_to_db()
+
+        cur.execute(f""" select "EmployeeId" from "Professor"
+                where "UserId" = '{session['user']['EmailID']}'
+                 """)
+        employeeId = cur.fetchall()[0][0]
+        print("employeeID : ", employeeId)
+
+        cur.execute(f""" select * from "Education" """)
+
+        allEducations = cur.fetchall()
+
+        cur.execute(f""" select * from "Education" 
+                where "EducationId" in (
+                    select "EducationId" from "Attended_Professor"
+                    where "ProfessorId" = '{employeeId}'
+                )
+                """)
+        professorEducation = cur.fetchall()
+        cur.close()
+
+    except Exception as e:
+        print(e)
+
     if('assignStudent' in result):
         try:
             cur=connect_to_db()
@@ -396,7 +426,7 @@ def professor():
             cur.close()
         except Exception as e:
             print(e)
-    return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects)
+    return render_template('professor.html',mentor=mentor,studentGPA=studentGPA,projectsUnderStudents=projectsUnderStudents,studentWorkingProjects=studentWorkingProjects, professorEducation = professorEducation, allEducations = allEducations)
 
 
 

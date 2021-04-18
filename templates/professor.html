@@ -188,6 +188,76 @@
     <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
 
         <h1>UPDATE EDUCATION</h1>
+        <!-- {{professorEducation}} -->
+
+
+        <h2>Your Education</h2>
+
+        {% if professorEducation %}
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th scope="col">EducationId </th>
+                <th scope="col">Institution</th>
+                <th scope="col">Degree </th>
+                <th scope="col">GraduationYear </th>
+                <th scope="col">Major </th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for row in professorEducation: %}
+
+                <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[6]}}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <h2>All educations</h2>
+
+        <!-- {{allEducations}} -->
+
+        {% if allEducations %}
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th scope="col">EducationId </th>
+                <th scope="col">Institution</th>
+                <th scope="col">Degree </th>
+                <th scope="col">GraduationYear </th>
+                <th scope="col">Major </th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for row in allEducations: %}
+
+                <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[6]}}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+
         <form action="" method="POST" style="width: 50%;margin: 30px auto 50px auto;">
             <div class="input-field">
                 <!-- <input type="number" name="professorID" id="professorID" placeholder="professorID"> -->
