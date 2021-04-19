@@ -71,7 +71,7 @@
         {% elif user.Designation == 'Recruiter' %}
         <button class = "btn btn-success"><a href="{{ url_for('RecruiterQueries') }}"> Click here to continue.</a></button>
         {% elif user.Designation == 'Administration Department' %}
-        <button class = "btn btn-success"><a href="{{ url_for('adminstration') }}"> Click here to continue.</a></button>
+        <button class = "btn btn-success"><a href="{{ url_for('admin') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Academic Department' %}
         <button class = "btn btn-success"><a href="{{ url_for('Academic') }}"> Click here to continue.</a></button>
         {% elif  user.Designation == 'Sports Committee' %}

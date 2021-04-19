@@ -1225,53 +1225,62 @@ def RecruiterQueries():
 
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
-
+    StudentDetails=""
+    AchievementDetails=""
+############################################################################
+#                               UPDATE ADMIN
+############################################################################
     if 'Batch' in request.form:
         batch = request.form['batch']
         rollNo = request.form['rollNo']
-        try:
-            cur = connect_to_db()
-            cur.execute(f"""
-                UPDATE "Student"
-                SET "Batch" = {batch}
-                WHERE "RollNo" = {rollNo};
-            """)
-        except Exception as e:
-            print(e)
-        cur.close()
+        if(rollNo!="RollNo" and batch!="Batch"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                    UPDATE "Student"
+                    SET "Batch" = {batch}
+                    WHERE "RollNo" = {rollNo};
+                """)
+                cur.close()
+            except Exception as e:
+                print(e)
+
     if 'ParentId' in request.form:
         parentId = request.form['parentId']
         rollNo = request.form['rollNo']
-        try:
-            cur = connect_to_db()
-            cur.execute(f"""
-                UPDATE "Student"
-                SET "ParentId" = {parentId}
-                WHERE "RollNo" = {rollNo};
+        if(rollNo!="RollNo" and parentId!="Parent EmailId"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                    UPDATE "Student"
+                    SET "ParentId" = '{parentId}'
+                    WHERE "RollNo" = {rollNo};
 
-            """)
-        except Exception as e:
-            print(e)
-        cur.close()
+                """)
+            except Exception as e:
+                print(e)
+            cur.close()
 
     if 'Password' in request.form:
         EmailId = request.form['EmailID']
         Password = request.form['password']
-        try:
-            cur = connect_to_db()
-            cur.execute(f"""
-                UPDATE "User"
-                SET "Password" = '{Password}'
-                WHERE "EmailID" = '{EmailId}';
-            """)
-        except Exception as e:
-            print(e)
-        cur.close()
+        if(EmailId!="EmailId" and len(Password)>=4):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                    UPDATE "User"
+                    SET "Password" = '{Password}'
+                    WHERE "EmailID" = '{EmailId}';
+                """)
+            except Exception as e:
+                print(e)
+            cur.close()
 
     if 'Award' in request.form:
         rollNo = request.form['rollNo']
         Award = request.form['proof']
-        if(Award!="Verification"):
+        
+        if(rollNo!="RollNo" and Award!="Verification"):
             try:
                 cur = connect_to_db()
                 print(Award)    
@@ -1285,7 +1294,68 @@ def admin():
                 print(e)
             cur.close()
         # print(request.form)
+############################################################################
+#                              SEARCH ADMIN
+############################################################################
+    if 'Batch1' in request.form:
+        batch = request.form['batch']
+        rollNo = request.form['rollNo']
+        if(rollNo!="RollNo" and batch!="Batch"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                    Select * from "Student" Where "Batch"={batch} and "RollNo"={rollNo};
+                """)
+                StudentDetails=cur.fetchall()
+                print(batch,rollNo,"ok",StudentDetails)
+                cur.close()
+            except Exception as e:
+                print(e)
 
+    if 'ParentId1' in request.form:
+        parentId = request.form['parentId']
+        rollNo = request.form['rollNo']
+        if(rollNo!="RollNo" and parentId!="Parent EmailId"):
+            try:
+                cur = connect_to_db()
+                cur.execute(f"""
+                    Select * from "Student" where "ParentId" LIKE '%{parentId}%' AND "RollNo"={rollNo};
+
+                """)
+                StudentDeatils=cur.fetchall()
+            except Exception as e:
+                print(e)
+            cur.close()
+
+    if 'Award1' in request.form:
+        rollNo = request.form['rollNo']
+        Award = request.form['proof']
+        
+        if(rollNo!="RollNo" and Award!="Verification"):
+            try:
+                cur = connect_to_db()
+                print(Award)    
+                cur.execute(f"""
+                    Select * from Achievement where "Proof" LIKE '%{Award}%' AND "StudentId"={rollNo} AND "Title" LIKE 'Dean List of Awardee';
+
+                """)
+                AchievementDetails=cur.fetchall()
+            except Exception as e:
+                print(e)
+            cur.close()
+        elif(rollNo!="RollNo"):
+            try:
+                cur = connect_to_db()
+                print(Award)    
+                cur.execute(f"""
+                    Select * from Achievement where "StudentId"={rollNo} AND "Title" LIKE 'Dean List of Awardee';
+
+                """)
+                AchievementDetails=cur.fetchall()
+            except Exception as e:
+                print(e)
+            cur.close()            
+#################################
     cur = connect_to_db()
     cur.execute(f"""
         select "RollNo"
@@ -1327,5 +1397,7 @@ def admin():
         students = students,
         students_headers = students_headers,
         parentIds = parentIds,
-        emailids = emailids
+        emailids = emailids,
+        StudentDetails=StudentDetails,
+        AchievementDetails=AchievementDetails
     )
